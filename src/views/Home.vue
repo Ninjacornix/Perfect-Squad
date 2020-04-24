@@ -12,7 +12,6 @@ export default {
   
 }
 </script>
-
 <style lang="scss">
 .field {
   display: block;

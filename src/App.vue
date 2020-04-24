@@ -19,10 +19,18 @@
     <router-link to="/players">Players</router-link>
     <router-link to="/favorites">Favorites</router-link>
     <div id="Demo" class="w3-dropdown-content w3-bar-block w3-border"> Formations
+      <li v-for="index in this.store" :key="index">
+        {{index}}
+      </li>
     </div>
   </div>
   </div>
     <router-view/>
+    <ul>
+      <li v-for="index in this.store" :key="index">
+        {{index}}
+      </li>
+    </ul>
   </div>
 </template>
 <script>
@@ -31,13 +39,13 @@ export default {
   name: "Home",
   data: function() {
     return {
-      store: {},
+      store: this.$store.state.store.formations,
     }
   },
-  methods:{
+  computed:{
     ...mapActions(['login']),
   },
-  mounted() {
+  created() {
     this.login()
   } 
 }
