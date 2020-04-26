@@ -19,18 +19,10 @@
     <router-link to="/players">Players</router-link>
     <router-link to="/favorites">Favorites</router-link>
     <div id="Demo" class="w3-dropdown-content w3-bar-block w3-border"> Formations
-      <li v-for="index in this.store" :key="index">
-        {{index}}
-      </li>
     </div>
   </div>
   </div>
     <router-view/>
-    <ul>
-      <li v-for="index in this.store" :key="index">
-        {{index}}
-      </li>
-    </ul>
   </div>
 </template>
 <script>
@@ -63,7 +55,8 @@ $navcolor: green;
   height: 50px;
   width: 100%;
   background-color: $navcolor;
-  position: relatifive;
+  position: fixed;
+  z-index: 99;
 }
 
 .nav > .nav-header {

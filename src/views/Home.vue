@@ -1,8 +1,6 @@
 <template>
   <div class="home">
-    <div class="field">
-      <img class="field" src="../assets/field.jpg" alt="">
-    </div>
+    <div class="field"></div>
   </div>
 </template>
 
@@ -13,12 +11,36 @@ export default {
 }
 </script>
 <style lang="scss">
-.field {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 5%;
-  width: 50%;
-  top: 20vh;
+
+.home {
+  position: relative;
+  top: 0;
+  padding-top: 10px;
+  background: url("../assets/background.jpg") no-repeat center center fixed;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
 }
+
+.field {
+  position: relative;
+  width: 420px;
+  height: 700px;
+  margin: 0 auto;
+  margin-top: 60px;
+  background: url("../assets/field.jpg") no-repeat;
+  background-size: 100%;
+}
+
+@media (max-width:800px) {
+  .home {
+    position: relative;
+  }
+  .field {
+    width: 400px;
+    height: 700px;
+    background-size: 100%;
+  }
+}
+
 </style>
