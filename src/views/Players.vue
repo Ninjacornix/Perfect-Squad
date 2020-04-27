@@ -29,7 +29,13 @@
     <div id="myModal" class="modal">
       <div class="modal-content">
         <span class="close">&times;</span>
-        <p>Some text in the Modal..</p>
+        <div class="popuprow">
+          <div class="popupcolumnr">
+            <div><div id="playerinfo"></div><span class="dot"></span></div>
+            <div id="playerpic"></div>
+          </div>
+          <div class="popupcolumnl">Saur</div>
+        </div>
       </div>
     </div>
   </div>
@@ -78,37 +84,35 @@ export default {
   },
   methods: {
     showInfo(e) {
-      console.log()
       if(e.target.tagName === "DIV"){
         const player = e.target.firstElementChild.firstElementChild.innerHTML.split(" ")[0];
         for(let i = 0; i < this.$store.state.store.players.length; i++){
           if(this.$store.state.store.players[i].name === player){
-            console.log(player + " success");
-            info(player)
+            info(this.$store.state.store.players[i])
           }
         }
       } else if(e.target.tagName === "STRONG"){
         const player = e.target.innerHTML.split(" ")[0];
         for(let i = 0; i < this.$store.state.store.players.length; i++){
           if(this.$store.state.store.players[i].name === player){
-            console.log(player + " success");
-            info(player)
+            info(this.$store.state.store.players[i])
           }
         }
       } else if(e.target.tagName === "LABEL"){
         const player = e.target.previousElementSibling.firstElementChild.innerHTML.split(" ")[0];
         for(let i = 0; i < this.$store.state.store.players.length; i++){
           if(this.$store.state.store.players[i].name === player){
-            console.log(player + " success");
-            info(player)
+            info(this.$store.state.store.players[i])
           }
         }
       }
       function info(player){
-        console.log(player)
         const modal = document.getElementById("myModal");
         const span = document.getElementsByClassName("close")[0];
+        document.getElementById("playerinfo").innerHTML = "<strong>" + player.name + " " + player.lastName + "</strong>";
         modal.style.display = "block";
+        const pic = player.formationPicture;
+        document.getElementById("playerpic").style.background = "url(" + pic + ")";
         span.onclick = function() {
           modal.style.display = "none";
         }
@@ -157,12 +161,40 @@ export default {
 }
 
 .modal-content {
-  background-color: #fefefe;
+  background-color: silver;
   margin: 15% auto;
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
 }
+
+.popuprow{
+  -moz-column-count: 2;
+  -webkit-column-count: 2;
+}
+
+.popupcolumnr {
+  display: table-cell;
+  float: left;
+  width: 100%;
+  border-right: 2px solid black;
+}
+
+.dot {
+  height: 25px;
+  width: 25px;
+  background-color: green;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.popupcolumnl {
+  display: table-cell;
+  height: 40px;
+  width: 100%;
+  float: left;
+}
+
 
 .close {
   color: #aaa;
