@@ -4,7 +4,7 @@
   <input type="checkbox" id="nav-check">
   <div class="nav-header">
     <div class="nav-title">
-      <router-link to="/home"><str>Perfect squad</str></router-link>
+      <router-link to="/"><div>Perfect squad</div></router-link>
     </div>
   </div>
   <div class="nav-btn">
@@ -31,7 +31,6 @@ export default {
   name: "Home",
   data: function() {
     return {
-      store: this.$store.state.store.formations,
     }
   },
   computed:{
