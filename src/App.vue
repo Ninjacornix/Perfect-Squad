@@ -18,7 +18,10 @@
   <div class="nav-links">
     <router-link to="/players">Players</router-link>
     <router-link to="/favorites">Favorites</router-link>
-    <div id="Demo" class="w3-dropdown-content w3-bar-block w3-border"> Formations
+    <div class="formations">Formations
+      <div class="things">
+        <a class="content" @click="log()" v-for="index in this.$store.state.store.formations" :key="index.id">{{index.formation}}</a>
+      </div>
     </div>
   </div>
   </div>
@@ -26,19 +29,16 @@
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex'
 export default {
   name: "Home",
-  data: function() {
-    return {
-    }
-  },
-  computed:{
-    ...mapActions(['login']),
-  },
   created() {
-    this.login()
-  } 
+    this.$store.dispatch("login");
+  },
+  methods: {
+    log(e){
+      console.log(e)
+    }
+  }
 }
 </script>
 
@@ -56,6 +56,36 @@ $navcolor: green;
   background-color: $navcolor;
   position: fixed;
   z-index: 99;
+}
+
+.things {
+  background-color: $navcolor;
+  display: none;
+  position: absolute;
+  min-width: 160px;
+  padding: 12px 16px;
+  min-width: 160px;
+  z-index: 1;
+}
+
+.showformations {
+  display: block;
+}
+
+.content {
+  float: left;
+  text-align: left;
+  height: 15px;
+  padding: 10px;
+}
+
+.formations{
+  position: relative;
+  display: inline-block;
+}
+
+.formations:hover .things{
+  display: block;
 }
 
 .nav > .nav-header {
