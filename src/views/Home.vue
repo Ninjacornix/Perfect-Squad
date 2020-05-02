@@ -1,6 +1,8 @@
 <template>
   <div class="home">
-    <div class="field"></div>
+    <div class="field">
+      <div></div>
+    </div>
   </div>
 </template>
 

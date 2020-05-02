@@ -31,15 +31,15 @@
         <span class="close">&times;</span>
         <div class="popuprow">
           <div class="popupcolumnr">
-            <div><div id="playerinfo"></div></div>
-            <span class="dot"></span>
+            <div id="playerinfo"></div>
             <img id="playerpic">
+            <span id="dot"></span>
             <div class="nacionality"><label id="country"></label><img id="flag"></div>
             <div class="club"><label id="club"></label><img id="logo"></div>
             <div class="date">Birth date<label id="year"></label></div>
             <div class="ppos">Preferred positions<label id="playerpos"></label></div>
             <div class="pospos">Positions<label id="pos"></label></div>
-            <div class="value">Value<label id=""></label></div>
+            <div class="value">Value<label id="money"></label></div>
           </div>
           <div class="popupcolumnl">
            
@@ -117,6 +117,7 @@ export default {
     },
     info(player){
         const skills = player.playerSkills;
+        console.log(player.value);
 
         //left side
         const modal = document.getElementById("myModal");
@@ -128,16 +129,18 @@ export default {
         const year = document.getElementById("year");
         const playerpos = document.getElementById("playerpos");
         const pos = document.getElementById("pos");
+        const money = document.getElementById("money");
         document.getElementById("playerinfo").innerHTML = "<strong>" + player.name + " " + player.lastName + "</strong>";
+        document.getElementById("dot").innerHTML = player.stats.position;
         modal.style.display = "block";
         const pic = player.formationPicture;
         const picture = document.getElementById("playerpic");
         nacionality.innerHTML = player.nationality;
+        money.innerHTML = player.stats.value; 
         flag.src = player.nationalityFlag;
         club.innerHTML = player.stats.club;
         logo.src = player.teamCrest;
         picture.src = pic;
-        picture.style.clear = "both";
         picture.style.width = "50px";
         picture.style.height = "50px";
         year.innerHTML = player.stats.birthDate;
@@ -148,12 +151,20 @@ export default {
         const element = document.querySelector(".popupcolumnl");
         for(const skill in skills){
           const skillthings = document.createElement("div");
-          skillthings.innerHTML = skills[skill].name;
+          skillthings.innerHTML = "<div class='skill_main'>" + skills[skill].name + "</div>";
+          skillthings.className = "skill"
           for(const subskill in skills[skill].skills){
             console.log(skills[skill].skills[subskill].name)
             const subskillthings = document.createElement("div");
+            const progress = document.createElement("progress");
+            console.log(skills[skill].skills[subskill].value);
+            progress.className = "progbar"
+            progress.max = "100";
+            progress.value = skills[skill].skills[subskill].value;
             subskillthings.innerHTML = skills[skill].skills[subskill].name;
-            skillthings.appendChild(subskillthings)
+            
+            skillthings.appendChild(subskillthings);
+            skillthings.appendChild(progress);
           }
           element.appendChild(skillthings);
         }
@@ -183,6 +194,9 @@ export default {
   height: 100%;
   width: 100%;
 }
+#playerinfo{
+  text-align: center;
+}
 
 .row {
   padding-top: 40px;
@@ -206,6 +220,13 @@ export default {
   background-color: rgba(0,0,0,0.4); 
 }
 
+.picture{
+  width: 50px;
+  height: 50px;
+}
+
+
+
 .modal-content {
   background-color: silver;
   margin: 15% auto;
@@ -214,34 +235,72 @@ export default {
   width: 80%;
 }
 
-.popuprow{
-  column-count: 2;
+.popuprow:after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
 .popupcolumnr {
-  display: table-cell;
   float: left;
-  width: 100%;
-  border-right: 2px solid black;
+  width: 50%;
+  display: inline-block;
 }
 
 .nacionality {
-  display: inline-block;
+  display: flex;
+  justify-content: space-between;
 }
 
-.dot {
-  height: 25px;
-  width: 25px;
+.club{
+  display: flex;
+  justify-content: space-between;
+}
+
+.date{
+  display: flex;
+  justify-content: space-between;
+}
+
+.skill_main{
+  background-color: white;
+}
+
+.ppos{
+  display: flex;
+  justify-content: space-between;
+}
+
+.pospos{
+  display: flex;
+  justify-content: space-between;
+}
+
+.value{
+  display: flex;
+  justify-content: space-between;
+}
+
+.progbar{
+  width: 100%;
+  appearance: none;
+}
+
+#dot {
+  display: block;
+  height: 35px;
+  width: 35px;
   background-color: green;
   border-radius: 50%;
   display: inline-block;
+  text-align: center;
+  line-height: 35px;
 }
 
 .popupcolumnl {
-  display: table-cell;
-  height: 40px;
-  width: 100%;
+  width: 50%;
   float: left;
+  border-left: 2px solid black;
 }
 
 

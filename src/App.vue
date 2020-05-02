@@ -20,7 +20,9 @@
     <router-link to="/favorites">Favorites</router-link>
     <div class="formations">Formations
       <div class="things">
-        <a class="content" @click="log()" v-for="index in this.$store.state.store.formations" :key="index.id">{{index.formation}}</a>
+        <ul>
+          <li v-for="index in this.$store.state.store.formations" :key="index.id" ><a @click="log">{{index.formation}}</a></li>
+        </ul>
       </div>
     </div>
   </div>
@@ -35,8 +37,13 @@ export default {
     this.$store.dispatch("login");
   },
   methods: {
-    log(e){
-      console.log(e)
+    log(event){
+      const save = event.target.innerHTML;
+      for(const index in this.$store.state.store.formations){
+        if(save === this.$store.state.store.formations[index].formation){
+          console.log(this.$store.state.store.formations[index].positions)
+        }
+      } 
     }
   }
 }
@@ -58,33 +65,36 @@ $navcolor: green;
   z-index: 99;
 }
 
-.things {
-  background-color: $navcolor;
-  display: none;
-  position: absolute;
-  min-width: 160px;
-  padding: 12px 16px;
-  min-width: 160px;
-  z-index: 1;
+
+.formations ul {
+    list-style-type: none;
+    padding: 0;
+    position: absolute;
 }
 
-.showformations {
-  display: block;
+.formations a{
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    background: $navcolor;
+}
+.things {
+  display: none;
+  background: $navcolor;
+  max-height: 0;
+  overflow: hidden;
 }
 
 .content {
+  display: block;
   float: left;
   text-align: left;
   height: 15px;
   padding: 10px;
 }
 
-.formations{
-  position: relative;
-  display: inline-block;
-}
-
 .formations:hover .things{
+  max-height: 100%;
   display: block;
 }
 
@@ -192,5 +202,9 @@ $navcolor: green;
     height: calc(100vh - 50px);
     overflow-y: auto;
   }
+  .formations a{
+    background: rgba(0, 0, 0, 0.3);
+    width: 100%;
+}
 }
 </style>
