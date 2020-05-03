@@ -31,18 +31,23 @@
         <span class="close">&times;</span>
         <div class="popuprow">
           <div class="popupcolumnr">
+            
             <div id="playerinfo"></div>
-            <img id="playerpic">
-            <span id="dot"></span>
+            <div id="pinfo">
+              <img id="playerpic">
+              <span id="dot"></span>
+            </div>
             <div class="nacionality"><label id="country"></label><img id="flag"></div>
             <div class="club"><label id="club"></label><img id="logo"></div>
+            <div class="height">Height<label id="pheight"></label></div>
+            <div class="weight">Weight<label id="pweight"></label></div>
             <div class="date">Birth date<label id="year"></label></div>
+            <div class="age">Age<label id="realage"></label></div>
             <div class="ppos">Preferred positions<label id="playerpos"></label></div>
             <div class="pospos">Positions<label id="pos"></label></div>
             <div class="value">Value<label id="money"></label></div>
           </div>
           <div class="popupcolumnl">
-           
           </div>
         </div>
       </div>
@@ -117,7 +122,6 @@ export default {
     },
     info(player){
         const skills = player.playerSkills;
-        console.log(player.value);
 
         //left side
         const modal = document.getElementById("myModal");
@@ -130,6 +134,10 @@ export default {
         const playerpos = document.getElementById("playerpos");
         const pos = document.getElementById("pos");
         const money = document.getElementById("money");
+        const pheight = document.getElementById("pheight");
+        const pweight = document.getElementById("pweight");
+        const date = new Date(player.birthDate);
+        console.log(date)
         document.getElementById("playerinfo").innerHTML = "<strong>" + player.name + " " + player.lastName + "</strong>";
         document.getElementById("dot").innerHTML = player.stats.position;
         modal.style.display = "block";
@@ -141,30 +149,34 @@ export default {
         club.innerHTML = player.stats.club;
         logo.src = player.teamCrest;
         picture.src = pic;
-        picture.style.width = "50px";
-        picture.style.height = "50px";
         year.innerHTML = player.stats.birthDate;
         playerpos.innerHTML = player.stats.position;
         pos.innerHTML = player.stats.posiblePositions;
+        pheight.innerHTML = player.stats.height;
+        pweight.innerHTML = player.stats.weight;
 
         //right side
         const element = document.querySelector(".popupcolumnl");
         for(const skill in skills){
           const skillthings = document.createElement("div");
           skillthings.innerHTML = "<div class='skill_main'>" + skills[skill].name + "</div>";
-          skillthings.className = "skill"
-          for(const subskill in skills[skill].skills){
-            console.log(skills[skill].skills[subskill].name)
-            const subskillthings = document.createElement("div");
-            const progress = document.createElement("progress");
-            console.log(skills[skill].skills[subskill].value);
-            progress.className = "progbar"
-            progress.max = "100";
-            progress.value = skills[skill].skills[subskill].value;
-            subskillthings.innerHTML = skills[skill].skills[subskill].name;
-            
-            skillthings.appendChild(subskillthings);
-            skillthings.appendChild(progress);
+          if(skills[skill] != "specialities"){
+            for(const subskill in skills[skill].skills){
+              const subskillthings = document.createElement("div");
+              const progress = document.createElement("progress");
+              console.log(skills[skill].skills[subskill].value);
+              progress.className = "progbar"
+              progress.max = "100";
+              progress.value = skills[skill].skills[subskill].value;
+              subskillthings.innerHTML = skills[skill].skills[subskill].name;
+              skillthings.appendChild(subskillthings);
+              skillthings.appendChild(progress);
+            }
+          } else {
+            console.log(skills[skill])
+            /* for(const speciality in skills[skill].skills){
+              console.log(speciality)
+            } */
           }
           element.appendChild(skillthings);
         }
@@ -191,7 +203,7 @@ export default {
   padding-top: 10px;
   background: url("../assets/background.jpg") no-repeat center center fixed;
   background-size: cover;
-  height: 100%;
+  min-height: 100%;
   width: 100%;
 }
 #playerinfo{
@@ -220,18 +232,22 @@ export default {
   background-color: rgba(0,0,0,0.4); 
 }
 
-.picture{
-  width: 50px;
-  height: 50px;
+#playerpic{
+  width: 75px;
+  height: 75px;
 }
 
-
+#pinfo{
+  display: flex;
+  justify-content: space-between;
+}
 
 .modal-content {
   background-color: silver;
   margin: 15% auto;
   padding: 20px;
   border: 1px solid #888;
+  border-radius: 2%;
   width: 80%;
 }
 
@@ -242,6 +258,7 @@ export default {
 }
 
 .popupcolumnr {
+  padding: 20px;
   float: left;
   width: 50%;
   display: inline-block;
@@ -264,6 +281,7 @@ export default {
 
 .skill_main{
   background-color: white;
+  padding-left: 5px;
 }
 
 .ppos{
@@ -283,7 +301,19 @@ export default {
 
 .progbar{
   width: 100%;
-  appearance: none;
+  height: 10px;
+  border-radius: 25%;
+  vertical-align: baseline;
+}
+
+.height {
+  display: flex;
+  justify-content: space-between;
+}
+
+.weight {
+  display: flex;
+  justify-content: space-between;
 }
 
 #dot {
@@ -298,9 +328,10 @@ export default {
 }
 
 .popupcolumnl {
+  padding: 20px;
   width: 50%;
   float: left;
-  border-left: 2px solid black;
+  border-left: 2px solid lightgray;
 }
 
 
@@ -344,7 +375,21 @@ export default {
   float: right;
 }
 
-@media (max-width:800px){
+@media screen and (max-width:800px){
+  #players{
+    min-height: 100%;
+  }
+  .popupcolumnr {
+    width: 100%;
+  }
+  .popupcolumnl {
+    width: 100%;
+    border-left: none;
+    border-top: 2px solid lightgray;
+  }
+  #players{
+    position: absolute;
+  }
   .column{
     width: 100%;
     border-bottom: 1px solid black;

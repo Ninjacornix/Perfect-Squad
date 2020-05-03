@@ -51,10 +51,18 @@ export default {
 
 <style lang="scss">
 $navcolor: green;
+#app{
+  height: 100%;
+}
 
 * {
   box-sizing: border-box;
   margin: 0;
+  font-family: 'Roboto';
+}
+@font-face {
+  font-family: Roboto;
+  src: url("../src/assets/Roboto-Medium.ttf");
 }
 
 .nav {
@@ -63,6 +71,7 @@ $navcolor: green;
   background-color: $navcolor;
   position: fixed;
   z-index: 99;
+  font-family: Roboto;
 }
 
 
@@ -152,7 +161,10 @@ $navcolor: green;
   display: none;
 }
 
-@media (max-width:800px) {
+@media screen and (max-width:500px) {
+  .nav {
+    width: 100%;
+  }
   .nav > .nav-btn {
     display: inline-block;
     position: absolute;

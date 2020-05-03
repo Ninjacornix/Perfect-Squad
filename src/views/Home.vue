@@ -1,7 +1,6 @@
 <template>
   <div class="home">
     <div class="field">
-      <div></div>
     </div>
   </div>
 </template>
@@ -13,6 +12,7 @@ export default {
 }
 </script>
 <style lang="scss">
+html, body { height: 100% }
 
 .home {
   position: relative;
@@ -20,28 +20,35 @@ export default {
   padding-top: 10px;
   background: url("../assets/background.jpg") no-repeat center center fixed;
   background-size: cover;
-  height: 100%;
   width: 100%;
+  min-height: 100%;
 }
 
 .field {
   position: relative;
-  width: 420px;
+  width: 400px;
   height: 700px;
-  margin: 0 auto;
-  margin-top: 60px;
+  margin: auto;
+  margin-top: 45px;
+  margin-bottom: auto;
   background: url("../assets/field.jpg") no-repeat;
+  background-size: cover;
   background-size: 100%;
+  max-width: 100%;
 }
 
-@media (max-width:800px) {
+@media screen and (max-width:800px) {
+  html, body { height: 100%; }
   .home {
-    position: relative;
+    position: absolute;
+    min-height: 100%;
+    background-size: cover;
   }
   .field {
     width: 400px;
     height: 700px;
     background-size: 100%;
+    max-width: 100%;
   }
 }
 
