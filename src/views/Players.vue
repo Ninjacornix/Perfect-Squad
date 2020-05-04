@@ -45,6 +45,7 @@
             <div class="age">Age<label id="realage"></label></div>
             <div class="ppos">Preferred positions<label id="playerpos"></label></div>
             <div class="pospos">Positions<label id="pos"></label></div>
+            <div class="preferedfoot">Preferred Foot<label id="foot"></label></div>
             <div class="value">Value<label id="money"></label></div>
           </div>
           <div class="popupcolumnl">
@@ -136,8 +137,11 @@ export default {
         const money = document.getElementById("money");
         const pheight = document.getElementById("pheight");
         const pweight = document.getElementById("pweight");
-        const date = new Date(player.birthDate);
-        console.log(date)
+        const realage = document.getElementById("realage");
+        const foot = document.getElementById("foot");
+        const date = new Date(player.stats.birthDate);
+        const current_date = new Date();
+        const age = current_date.getFullYear() - date.getFullYear();
         document.getElementById("playerinfo").innerHTML = "<strong>" + player.name + " " + player.lastName + "</strong>";
         document.getElementById("dot").innerHTML = player.stats.position;
         modal.style.display = "block";
@@ -154,17 +158,19 @@ export default {
         pos.innerHTML = player.stats.posiblePositions;
         pheight.innerHTML = player.stats.height;
         pweight.innerHTML = player.stats.weight;
+        realage.innerHTML = age;
+        foot.innerHTML = player.stats.preferredFoot;
 
         //right side
         const element = document.querySelector(".popupcolumnl");
         for(const skill in skills){
           const skillthings = document.createElement("div");
+          const specials = document.createElement("div");
           skillthings.innerHTML = "<div class='skill_main'>" + skills[skill].name + "</div>";
-          if(skills[skill] != "specialities"){
+          if(skills[skill].name != "specialities"){
             for(const subskill in skills[skill].skills){
               const subskillthings = document.createElement("div");
               const progress = document.createElement("progress");
-              console.log(skills[skill].skills[subskill].value);
               progress.className = "progbar"
               progress.max = "100";
               progress.value = skills[skill].skills[subskill].value;
@@ -173,12 +179,15 @@ export default {
               skillthings.appendChild(progress);
             }
           } else {
-            console.log(skills[skill])
-            /* for(const speciality in skills[skill].skills){
-              console.log(speciality)
-            } */
+            for(const speciality in skills[skill].skills){
+              const special = document.createElement("div");
+              special.innerHTML = skills[skill].skills[speciality].name;
+              special.className = "speci";
+              specials.appendChild(special);
+            }
           }
           element.appendChild(skillthings);
+          element.appendChild(specials);
         }
 
         span.onclick = function() {
@@ -207,6 +216,7 @@ export default {
   width: 100%;
 }
 #playerinfo{
+  justify-content: center;
   text-align: center;
 }
 
@@ -237,11 +247,6 @@ export default {
   height: 75px;
 }
 
-#pinfo{
-  display: flex;
-  justify-content: space-between;
-}
-
 .modal-content {
   background-color: silver;
   margin: 15% auto;
@@ -264,56 +269,28 @@ export default {
   display: inline-block;
 }
 
-.nacionality {
+.popupcolumnr div{
   display: flex;
   justify-content: space-between;
 }
 
-.club{
-  display: flex;
-  justify-content: space-between;
+
+.speci{
+  text-align: center;
 }
 
-.date{
-  display: flex;
-  justify-content: space-between;
-}
 
 .skill_main{
   background-color: white;
   padding-left: 5px;
 }
 
-.ppos{
-  display: flex;
-  justify-content: space-between;
-}
-
-.pospos{
-  display: flex;
-  justify-content: space-between;
-}
-
-.value{
-  display: flex;
-  justify-content: space-between;
-}
 
 .progbar{
   width: 100%;
   height: 10px;
   border-radius: 25%;
   vertical-align: baseline;
-}
-
-.height {
-  display: flex;
-  justify-content: space-between;
-}
-
-.weight {
-  display: flex;
-  justify-content: space-between;
 }
 
 #dot {

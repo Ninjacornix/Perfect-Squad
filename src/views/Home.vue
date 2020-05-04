@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <div class="field">
+      <span class="dot"></span>
     </div>
   </div>
 </template>
@@ -27,15 +28,29 @@ html, body { height: 100% }
 .field {
   position: relative;
   width: 400px;
-  height: 700px;
+  height: 570px;
   margin: auto;
   margin-top: 45px;
-  margin-bottom: auto;
+  margin-bottom: 5px;
   background: url("../assets/field.jpg") no-repeat;
   background-size: cover;
   background-size: 100%;
   max-width: 100%;
+  display:flex;
 }
+
+.dot {
+  position: absolute;
+  height: 15px;
+  width: 15px;
+  background-color: #bbb;
+  border-radius: 50%;
+  margin: auto;
+  bottom: 40px;
+  vertical-align: middle;
+}
+
+
 
 @media screen and (max-width:800px) {
   html, body { height: 100%; }
