@@ -1,16 +1,63 @@
 <template>
   <div class="home">
     <div class="field">
-      <span class="dot"></span>
+      <div id="CF"></div>
+      <div class="upper">
+      <div id="LW"></div>
+      <div id="AM"></div>
+      <div id="RW"></div>
+      </div>
+      <div class="middle">
+        <div id="LM"></div>
+        <div id="CM"></div>
+        <div id="RM"></div>
+      </div>
+      <div id="DM"></div>
+      <div class="back">
+        <div id="LB"></div>
+        <div id="CB"></div>
+        <div id="RB"></div>
+      </div>
+      <div id="GK"></div>
     </div>
+    <button @click="arrange">Click me</button>
   </div>
 </template>
 
 <script>
 
 export default {
-  
-}
+  data: function(){
+    return {
+      positions: ["CF","LW","AM","RW","LM","CM","RM","DM","LB","CB","RB","GK"]
+    }
+  },
+  methods: {
+    arrange(){
+      let positions = this.positions;
+      for(let i = 0; i < positions.length; i++){
+        document.getElementById(positions[i]).innerHTML = "";
+      }
+      for(let pos in this.formation){
+        for(let i = 0; i < positions.length; i++){
+          if(pos.includes(positions[i].toLowerCase())){
+            for(let j = 0; j < this.formation[pos]; j++){4
+              const elem = document.getElementById(positions[i]);
+              const player = document.createElement("div");
+              player.className = "playerformation";
+              elem.appendChild(player);
+            }
+          }
+      } 
+    }
+    const elem = document.getElementById("GK");
+    const player = document.createElement("div");
+    player.className = "playerformation";
+    elem.appendChild(player);
+  }
+  },
+  props: ["formation"]
+  }
 </script>
 <style lang="scss">
 html, body { height: 100% }
@@ -36,20 +83,107 @@ html, body { height: 100% }
   background-size: cover;
   background-size: 100%;
   max-width: 100%;
-  display:flex;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
 }
 
-.dot {
-  position: absolute;
-  height: 15px;
-  width: 15px;
-  background-color: #bbb;
-  border-radius: 50%;
+// AREAS
+#CF{
+  margin: 20% auto 0 auto;
+  width: 35%;
+  height: 13%;
+  display: flex;
+}
+
+.upper{
+  margin: 0 auto 0 auto;
+  width: 82%;
+  height: 13%;
+  display: flex;
+}
+
+#LW{
+  width: 25%;
+  height: 100%;
+}
+
+#AM{
+  width: 50%;
+  height: 100%;
+}
+
+#RW{
+  width: 25%;
+  height: 100%;
+}
+
+.middle{
+  margin: 0 auto 0 auto;
+  width: 82%;
+  height: 17%;
+  display: flex;
+}
+
+#LM{
+  width: 25%;
+  height: 100%;
+}
+
+#CM{
+  width: 50%;
+  height: 100%;
+  display: flex;
+}
+
+#RM{
+  width: 25%;
+  height: 100%;
+}
+
+#DM{
+  margin: 0 auto 0 auto;
+  width: 40%;
+  height: 13%;
+}
+
+.back{
+  margin: 0 auto 0 auto;
+  width: 82%;
+  height: 15%;
+  display: flex;
+}
+
+#LB{
+  width: 25%;
+  height: 100%;
+}
+
+#CB{
+  width: 50%;
+  height: 100%;
+  display: flex;
+}
+
+#RB{
+  width: 25%;
+  height: 100%;
+}
+
+#GK{
+  width: 25%;
+  height: 10%;
+  margin: 0 auto 0 auto;
+  display: flex;
+}
+
+.playerformation{
   margin: auto;
-  bottom: 40px;
-  vertical-align: middle;
+  height: 25px;
+  width: 25px;
+  background-color: orange;
+  border-radius: 50%;
 }
-
 
 
 @media screen and (max-width:800px) {
@@ -64,6 +198,9 @@ html, body { height: 100% }
     height: 700px;
     background-size: 100%;
     max-width: 100%;
+  }
+  #CF{
+    margin: 10% auto 0 auto;
   }
 }
 

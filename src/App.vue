@@ -27,7 +27,7 @@
     </div>
   </div>
   </div>
-    <router-view/>
+    <router-view v-bind:formation="formation"/>
   </div>
 </template>
 <script>
@@ -36,12 +36,17 @@ export default {
   created() {
     this.$store.dispatch("login");
   },
+  data: function(){
+    return{
+      formation: ""
+    }
+  },
   methods: {
     log(event){
       const save = event.target.innerHTML;
       for(const index in this.$store.state.store.formations){
         if(save === this.$store.state.store.formations[index].formation){
-          console.log(this.$store.state.store.formations[index].positions)
+          this.formation = this.$store.state.store.formations[index].positions;
         }
       } 
     }
