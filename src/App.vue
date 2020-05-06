@@ -27,7 +27,7 @@
     </div>
   </div>
   </div>
-    <router-view v-bind:formation="formation"/>
+    <router-view v-bind:pinfo="pinfo" v-bind:formation="formation"/>
   </div>
 </template>
 <script>
@@ -38,7 +38,8 @@ export default {
   },
   data: function(){
     return{
-      formation: ""
+      formation: "",
+      pinfo: ""
     }
   },
   methods: {
@@ -48,8 +49,9 @@ export default {
         if(save === this.$store.state.store.formations[index].formation){
           this.formation = this.$store.state.store.formations[index].positions;
         }
-      } 
-    }
+      }
+      this.pinfo = "function info()"
+    },
   }
 }
 </script>

@@ -11,7 +11,7 @@ Vue.use(VueRouter)
     path: '/',
     name: 'Home',
     component: Home,
-    props: true
+    props: true,
   },
   {
     path: '/players',

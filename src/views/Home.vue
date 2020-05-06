@@ -1,26 +1,30 @@
 <template>
   <div class="home">
     <div class="field">
-      <div id="CF"></div>
+      <div @click="pinfo" id="CF"></div>
       <div class="upper">
-      <div id="LW"></div>
-      <div id="AM"></div>
-      <div id="RW"></div>
+      <div @click="pinfo" id="LW"></div>
+      <div @click="pinfo" id="AM"></div>
+      <div @click="pinfo" id="RW"></div>
       </div>
       <div class="middle">
-        <div id="LM"></div>
-        <div id="CM"></div>
-        <div id="RM"></div>
+        <div @click="pinfo" id="LM"></div>
+        <div @click="pinfo" id="CM"></div>
+        <div @click="pinfo" id="RM"></div>
       </div>
-      <div id="DM"></div>
+      <div @click="pinfo" id="DM"></div>
       <div class="back">
-        <div id="LB"></div>
-        <div id="CB"></div>
-        <div id="RB"></div>
+        <div @click="pinfo" id="LB"></div>
+        <div @click="pinfo" id="CB"></div>
+        <div @click="pinfo" id="RB"></div>
       </div>
-      <div id="GK"></div>
+      <div @click="pinfo" id="GK"></div>
     </div>
-    <button @click="arrange">Click me</button>
+    <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+    </div>
+  </div>
   </div>
 </template>
 
@@ -29,11 +33,12 @@
 export default {
   data: function(){
     return {
-      positions: ["CF","LW","AM","RW","LM","CM","RM","DM","LB","CB","RB","GK"]
+      positions: ["CF","LW","AM","RW","LM","CM","RM","DM","LB","CB","RB","GK"],
+      players: []
     }
   },
-  methods: {
-    arrange(){
+  watch: {
+    formation(){
       let positions = this.positions;
       for(let i = 0; i < positions.length; i++){
         document.getElementById(positions[i]).innerHTML = "";
@@ -54,9 +59,34 @@ export default {
     const player = document.createElement("div");
     player.className = "playerformation";
     elem.appendChild(player);
-  }
+    }
   },
-  props: ["formation"]
+  methods: {
+    pinfo(e){
+      this.players = [];
+      const modal = document.getElementById("myModal");
+      const span = document.getElementsByClassName("close")[0];
+      const player = e.target.parentElement.id;
+      for(let i = 0; i < this.$store.state.store.players.length; i++){
+        for(let j = 0; j < this.$store.state.store.players[i].stats.posiblePositions.length; j++){
+          if(this.$store.state.store.players[i].stats.posiblePositions[j] === player){
+            console.log(this.$store.state.store.players[i]);
+          this.players.push(this.$store.state.store.players[i]);
+          }
+        }
+      }
+      modal.style.display = "block";
+      span.onclick = function() {
+          modal.style.display = "none";
+        }
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }
+    }
+  },
+    props: ["formation"]
   }
 </script>
 <style lang="scss">
@@ -88,6 +118,43 @@ html, body { height: 100% }
   flex-wrap: wrap;
 }
 
+// MODAL
+.modal {
+  display: none;
+  width: 100%; 
+  height: 100%; 
+  position: fixed; 
+  z-index: 2;
+  left: 0;
+  top: 0;
+  overflow: auto; 
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0,0.4); 
+}
+
+.modal-content {
+  background-color: silver;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  border-radius: 2%;
+  width: 80%;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 // AREAS
 #CF{
   margin: 20% auto 0 auto;
@@ -109,6 +176,7 @@ html, body { height: 100% }
 }
 
 #AM{
+  display: flex;
   width: 50%;
   height: 100%;
 }
