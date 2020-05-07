@@ -31,7 +31,6 @@
         <span class="close">&times;</span>
         <div class="popuprow">
           <div class="popupcolumnr">
-            
             <div id="playerinfo"></div>
             <div id="pinfo">
               <img id="playerpic">

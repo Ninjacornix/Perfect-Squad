@@ -23,6 +23,12 @@
     <div id="myModal" class="modal">
     <div class="modal-content">
       <span class="close">&times;</span>
+      <div class="player_section">
+        <div class="player_info" v-for="player in this.players" :key="player.id"><div class="player_name">{{player.name}} {{player.lastName}}</div>
+          <img class="player_image" v-bind:src="player.playerPicture">
+          <div class="add_favs">Add to favorites</div>
+        </div>
+      </div>
     </div>
   </div>
   </div>
@@ -70,7 +76,6 @@ export default {
       for(let i = 0; i < this.$store.state.store.players.length; i++){
         for(let j = 0; j < this.$store.state.store.players[i].stats.posiblePositions.length; j++){
           if(this.$store.state.store.players[i].stats.posiblePositions[j] === player){
-            console.log(this.$store.state.store.players[i]);
           this.players.push(this.$store.state.store.players[i]);
           }
         }
@@ -253,6 +258,30 @@ html, body { height: 100% }
   border-radius: 50%;
 }
 
+.player_section{
+  display: flex;
+}
+
+.player_info{
+  text-align: center;
+  padding: 2%;
+  background-color: silver;
+  margin: 0 auto;
+}
+
+.player_name{
+  align-content: center;
+}
+
+.player_image{
+  width: 100%;
+  height: 100%;
+}
+
+.add_favs{
+  align-content: center;
+}
+
 
 @media screen and (max-width:800px) {
   html, body { height: 100%; }
@@ -260,6 +289,10 @@ html, body { height: 100% }
     position: absolute;
     min-height: 100%;
     background-size: cover;
+  }
+  .player_section{
+    display: flex;
+    flex-direction: column;
   }
   .field {
     width: 400px;
