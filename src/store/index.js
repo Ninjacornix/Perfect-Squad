@@ -7,11 +7,24 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    store: {}
+    store: {},
+    favs: []
   },
   mutations: {
     setData(state , info ) {
       state.store = info;
+    },
+    favoritesadd(state, player){
+      if(!state.favs.includes(player)){
+        state.favs.push(player);
+      }
+    },
+    favoritesremove(state, player){
+      if(!state.favs.includes(player)){
+        const pindex = state.favs.indexOf(player);
+        console.log(pindex)
+        state.favs.push(player);
+      }
     }
   },
   actions: {

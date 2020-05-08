@@ -20,13 +20,18 @@
       </div>
       <div @click="pinfo" id="GK"></div>
     </div>
-    <div id="myModal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
+    <div id="myModal" class="popup">
+    <div class="popup-content">
+      <div id="info_row"></div>
+      <div id="selection_row"><div @click="sort_pop">Popularity</div><div @click="sort_value">Value</div><div @click="sort_age">Age</div></div>
       <div class="player_section">
-        <div class="player_info" v-for="player in this.players" :key="player.id"><div class="player_name">{{player.name}} {{player.lastName}}</div>
+        <div class="player_info" v-for="player in this.players" :key="player.id">
+          <div class="pdata"><img class="team_img" v-bind:src="player.teamCrest"><div class="player_name">{{player.name}} {{player.lastName}}</div></div>
           <img class="player_image" v-bind:src="player.playerPicture">
-          <div class="add_favs">Add to favorites</div>
+          <div class="add_favs">
+            <i @click="removefromfav(player)" id="remove_fav_player">Hello</i>
+            <i @click="addtofav(player)" id="fav_player" class="fab fa-medium">Hello</i>  
+          </div>
         </div>
       </div>
     </div>
@@ -73,6 +78,7 @@ export default {
       const modal = document.getElementById("myModal");
       const span = document.getElementsByClassName("close")[0];
       const player = e.target.parentElement.id;
+      document.getElementById("info_row").innerHTML = player;
       for(let i = 0; i < this.$store.state.store.players.length; i++){
         for(let j = 0; j < this.$store.state.store.players[i].stats.posiblePositions.length; j++){
           if(this.$store.state.store.players[i].stats.posiblePositions[j] === player){
@@ -89,6 +95,30 @@ export default {
             modal.style.display = "none";
           }
         }
+    },
+    addtofav(player){
+      this.$store.commit("favoritesadd", player);
+    },
+    removefromfav(player){
+      this.$store.commit("favoritesremove", player);
+    },
+    sort_pop(){
+      console.log(this.players)
+      this.players.sort(function(a,b) {
+        if(a.stats.kitNumber > b.stats.kitNumber){
+          return 1;
+        } else {
+          return 0;
+        }})
+        console.log(this.players)
+    },
+    sort_value(){
+      this.players.sort((a,b) => parseInt(a.stats.value) > parseInt(b.stats.value));
+    },
+    sort_age(){
+      //const date = new Date();
+      //const year = date.getFullYear();
+      //this.players.sort((a,b) => (a.stats.birthDate.getFullYear() - year) > (b.stats.birthDate.getFullYear() - year));
     }
   },
     props: ["formation"]
@@ -124,7 +154,7 @@ html, body { height: 100% }
 }
 
 // MODAL
-.modal {
+.popup {
   display: none;
   width: 100%; 
   height: 100%; 
@@ -137,13 +167,39 @@ html, body { height: 100% }
   background-color: rgba(0,0,0,0.4); 
 }
 
-.modal-content {
-  background-color: silver;
-  margin: 15% auto;
-  padding: 20px;
+#info_row{
+  text-align: center;
+  background-color: lightgray;
+  width: 100%;
+}
+
+.pdata{
+  display: flex;
+  justify-content: space-between;
+  background-color: gray;
+}
+
+.popup-content {
+  background: url("../assets/background.jpg") no-repeat center center fixed;
+  background-size: cover;
+  margin-top: 4%;
+  min-width: 100%;
+  padding-top: 0.5%;
   border: 1px solid #888;
-  border-radius: 2%;
-  width: 80%;
+  height: 100%;
+}
+
+#selection_row{
+  display: flex;
+  background-color: gray;
+}
+
+#selection_row > div{
+  margin: 0 auto;
+}
+
+.team_img{
+  float: left;
 }
 
 .close {
@@ -151,6 +207,7 @@ html, body { height: 100% }
   float: right;
   font-size: 28px;
   font-weight: bold;
+  z-index: 2;
 }
 
 .close:hover,
@@ -259,27 +316,40 @@ html, body { height: 100% }
 }
 
 .player_section{
+  position: absolute;
+  top: 30%;
+  max-height: 50%;
   display: flex;
 }
 
 .player_info{
+  display: flex;
+  flex-direction: column;
+  position: relative;
   text-align: center;
   padding: 2%;
-  background-color: silver;
   margin: 0 auto;
+  min-height: 100%;
+  width: 100%;
 }
 
 .player_name{
+  margin: auto;
   align-content: center;
+  background-color: gray;
 }
 
 .player_image{
   width: 100%;
-  height: 100%;
+  height: 75%;
 }
 
 .add_favs{
+  max-width: 100%;
   align-content: center;
+  display: flex;
+  justify-content: space-between;
+  background-color: gray;
 }
 
 
