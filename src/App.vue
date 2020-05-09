@@ -73,9 +73,11 @@ $navcolor: green;
 }
 
 .nav {
+  padding-left: 3%;
+  padding-right: 3%;
   height: 50px;
   width: 100%;
-  background-color: $navcolor;
+  background-color: #1C7523;
   position: fixed;
   z-index: 99;
   font-family: Roboto;
@@ -83,6 +85,11 @@ $navcolor: green;
 
 
 .formations ul {
+  text-align: center;
+  position: relative;
+  margin-top: 15px;
+  margin-left: -9px;
+  width: 111px;
   list-style-type: none;
   padding: 0;
   position: absolute;
@@ -92,11 +99,10 @@ $navcolor: green;
   display: block;
   padding: 10px;
   text-decoration: none;
-  background: $navcolor;
+  background-color: #1C7523;
 }
 .things {
   display: none;
-  background: $navcolor;
   max-height: 0;
   overflow: hidden;
 }
@@ -119,7 +125,6 @@ $navcolor: green;
 }
 
 .nav > .nav-header > .nav-title > a{
-  display: inline-block;
   text-decoration: none;
   color: #efefef;
 }
@@ -127,7 +132,6 @@ $navcolor: green;
 .nav > .nav-header > .nav-title {
   display: inline-block;
   font-size: 22px;
-  color: #fff;
   padding: 10px 10px 10px 10px;
 }
 
@@ -168,7 +172,10 @@ $navcolor: green;
   display: none;
 }
 
-@media screen and (max-width:500px) {
+@media screen and (max-width:600px) {
+  .formations ul{
+    width: 100%;
+  }
   .nav {
     width: 100%;
   }

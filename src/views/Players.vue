@@ -251,7 +251,7 @@ export default {
   margin: 15% auto;
   padding: 20px;
   border: 1px solid #888;
-  border-radius: 2%;
+  border-radius: 25px;
   width: 80%;
 }
 
@@ -280,8 +280,10 @@ export default {
 
 
 .skill_main{
-  background-color: white;
-  padding-left: 5px;
+  margin-top: 10px;
+  border-radius: 25px;
+  text-align: center;
+  background-color: rgba(255,255,255, 0.3);
 }
 
 
@@ -305,6 +307,7 @@ export default {
 
 .popupcolumnl {
   padding: 20px;
+  padding-top: 0;
   width: 50%;
   float: left;
   border-left: 2px solid lightgray;
@@ -342,6 +345,7 @@ export default {
 }
 
 .player > .name {
+  padding-left: 23px;
   position: relative;
   text-align: center;
   vertical-align: middle;

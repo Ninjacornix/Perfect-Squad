@@ -23,14 +23,14 @@
     <div id="myModal" class="popup">
     <div class="popup-content">
       <div id="info_row"></div>
-      <div id="selection_row"><div @click="sort_pop">Popularity</div><div @click="sort_value">Value</div><div @click="sort_age">Age</div></div>
+      <div id="selection_row"><div id="pop" @click="sort_pop">Popularity</div><div id="val" @click="sort_value">Value</div><div id="age" @click="sort_age">Age</div></div>
       <div class="player_section">
         <div class="player_info" v-for="player in this.players" :key="player.id">
           <div class="pdata"><img class="team_img" v-bind:src="player.teamCrest"><div class="player_name">{{player.name}} {{player.lastName}}</div></div>
           <img class="player_image" v-bind:src="player.playerPicture">
           <div class="add_favs">
-            <i @click="removefromfav(player)" id="remove_fav_player">Hello</i>
-            <i @click="addtofav(player)" id="fav_player" class="fab fa-medium">Hello</i>  
+            <fa-icon icon="heart-broken" @click="removefromfav(player)" id="remove_fav_player"></fa-icon>
+            <fa-icon icon="heart" @click="addtofav(player)" id="fav_player" class="fab fa-medium"></fa-icon>  
           </div>
         </div>
       </div>
@@ -40,7 +40,6 @@
 </template>
 
 <script>
-
 export default {
   data: function(){
     return {
@@ -74,6 +73,8 @@ export default {
   },
   methods: {
     pinfo(e){
+      if(!e.target.hasChildNodes()){
+      console.log(e.target.parentElement)
       this.players = [];
       const modal = document.getElementById("myModal");
       const span = document.getElementsByClassName("close")[0];
@@ -95,6 +96,7 @@ export default {
             modal.style.display = "none";
           }
         }
+      }
     },
     addtofav(player){
       this.$store.commit("favoritesadd", player);
@@ -176,7 +178,7 @@ html, body { height: 100% }
 .popup-content {
   background: url("../assets/background.jpg") no-repeat center center fixed;
   background-size: cover;
-  margin-top: 4%;
+  margin-top: 2.5%;
   min-width: 100%;
   padding-top: 0.5%;
   border: 1px solid #888;
@@ -186,6 +188,19 @@ html, body { height: 100% }
 #selection_row{
   display: flex;
   background-color: gray;
+}
+
+#val{
+  cursor: pointer;
+  padding-right: 40px;
+}
+
+#pop{
+  cursor: pointer;
+}
+
+#age{
+  cursor: pointer;
 }
 
 #selection_row > div{
@@ -255,6 +270,7 @@ html, body { height: 100% }
 }
 
 #CM{
+  padding-top: 15px;
   width: 50%;
   height: 100%;
   display: flex;
@@ -284,6 +300,7 @@ html, body { height: 100% }
 }
 
 #CB{
+  padding-top: 25px;
   width: 50%;
   height: 100%;
   display: flex;
@@ -295,6 +312,7 @@ html, body { height: 100% }
 }
 
 #GK{
+  padding-top: 10px;
   width: 25%;
   height: 10%;
   margin: 0 auto 0 auto;
@@ -302,10 +320,11 @@ html, body { height: 100% }
 }
 
 .playerformation{
+  border: 3px solid white;
   margin: auto;
   height: 25px;
   width: 25px;
-  background-color: orange;
+  background-color: #FD5F00;
   border-radius: 50%;
 }
 
@@ -326,7 +345,7 @@ html, body { height: 100% }
   margin: 0 auto;
   min-height: 100%;
   width: 100%;
-  flex: 1 1 auto;
+  flex: 0.1 0.1 200px;
 }
 
 .player_name{
