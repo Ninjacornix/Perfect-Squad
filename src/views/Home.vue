@@ -103,22 +103,16 @@ export default {
       this.$store.commit("favoritesremove", player);
     },
     sort_pop(){
-      console.log(this.players)
-      this.players.sort(function(a,b) {
-        if(a.stats.kitNumber > b.stats.kitNumber){
-          return 1;
-        } else {
-          return 0;
-        }})
-        console.log(this.players)
+      return this.players.sort((a,b) => a.stats.kitNumber - b.stats.kitNumber);
+      
     },
     sort_value(){
-      this.players.sort((a,b) => parseInt(a.stats.value) > parseInt(b.stats.value));
+      return this.players.sort((a,b) => Number(a.stats.value.replace(/\D/g,'')) - Number(b.stats.value.replace(/\D/g,'')));
     },
     sort_age(){
-      //const date = new Date();
-      //const year = date.getFullYear();
-      //this.players.sort((a,b) => (a.stats.birthDate.getFullYear() - year) > (b.stats.birthDate.getFullYear() - year));
+      const date = new Date();
+      const year = date.getFullYear();
+      return this.players.sort((a,b) => (new Date(a.stats.birthDate).getFullYear() - year) - (new Date(b.stats.birthDate).getFullYear() - year));
     }
   },
     props: ["formation"]
@@ -320,6 +314,7 @@ html, body { height: 100% }
   top: 30%;
   max-height: 50%;
   display: flex;
+  align-self: center;
 }
 
 .player_info{
@@ -331,6 +326,7 @@ html, body { height: 100% }
   margin: 0 auto;
   min-height: 100%;
   width: 100%;
+  flex: 1 1 auto;
 }
 
 .player_name{
@@ -354,7 +350,10 @@ html, body { height: 100% }
 
 
 @media screen and (max-width:800px) {
-  html, body { height: 100%; }
+  html, body {
+    height: 100%;
+   }
+
   .home {
     position: absolute;
     min-height: 100%;
@@ -362,7 +361,9 @@ html, body { height: 100% }
   }
   .player_section{
     display: flex;
+    top: auto;
     flex-direction: column;
+    max-height: 0;
   }
   .field {
     width: 400px;

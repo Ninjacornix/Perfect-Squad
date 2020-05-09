@@ -83,16 +83,16 @@ $navcolor: green;
 
 
 .formations ul {
-    list-style-type: none;
-    padding: 0;
-    position: absolute;
+  list-style-type: none;
+  padding: 0;
+  position: absolute;
 }
 
 .formations a{
-    display: block;
-    padding: 10px;
-    text-decoration: none;
-    background: $navcolor;
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  background: $navcolor;
 }
 .things {
   display: none;

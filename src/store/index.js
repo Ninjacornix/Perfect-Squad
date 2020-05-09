@@ -20,10 +20,12 @@ export default new Vuex.Store({
       }
     },
     favoritesremove(state, player){
-      if(!state.favs.includes(player)){
-        const pindex = state.favs.indexOf(player);
-        console.log(pindex)
-        state.favs.push(player);
+      if(state.favs.includes(player)){
+        const index = state.favs.indexOf(player);
+        console.log(index)
+        if (index > -1) {
+          state.favs.splice(index, 1);
+        }
       }
     }
   },
