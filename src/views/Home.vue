@@ -47,7 +47,8 @@ export default {
       positions: ["CF","LW","AM","RW","LM","CM","RM","DM","LB","CB","RB","GK"],
       players: [],
       change: "",
-      element: []
+      element: [],
+      player_order: ""
     }
   },
   watch: {
@@ -63,6 +64,7 @@ export default {
               const elem = document.getElementById(positions[i]);
               const player = document.createElement("div");
               player.className = "playerformation";
+              player.style.order = j + 1;
               elem.appendChild(player);
             }
           }
@@ -77,6 +79,7 @@ export default {
   methods: {
     pinfo(e){
       e.stopPropagation();
+      this.player_order = e.target.style.order;
       if(e.target.className === "playerformation"){
         if(this.players.length >= 1 ){
           this.players = [];
@@ -86,8 +89,7 @@ export default {
       if(this.element.length >= 1 ){
         this.element = []
       }
-      this.element.push(e.pageX);
-      this.element.push(e.pageY);
+      this.change = e.target.parentElement.id;
       document.getElementById("info_row").innerHTML = player;
       for(let i = 0; i < this.$store.state.store.players.length; i++){
         for(let j = 0; j < this.$store.state.store.players[i].stats.posiblePositions.length; j++){
@@ -102,17 +104,15 @@ export default {
     },
     addtofav(player){
       const modal = document.getElementById("myModal");
-      const home = document.querySelector(".home")
+      const pos = document.getElementById(this.change);
       this.change = player.formationPicture;
       this.$store.commit("favoritesadd", player);
       const player_pic = document.createElement("img");
       player_pic.src = this.change;
-      player_pic.style.position = "absolute";
-      player_pic.style.left = (this.element[0] - 35 )+'px';
-      player_pic.style.top = (this.element[1] - 50)+'px';
-      player_pic.style.width = "70px";
-      player_pic.style.height = "70px";
-      home.appendChild(player_pic);
+      player_pic.style.width = "60px";
+      player_pic.style.height = "60px";
+      player_pic.style.order = this.player_order;
+      pos.appendChild(player_pic);
       if(this.$store.state.favs.includes(player)){
         modal.style.display = "none";
       }
@@ -169,7 +169,7 @@ html, body { height: 100% }
 .popup {
   display: none;
   width: 100%; 
-  height: 100%; 
+  height: 100vh; 
   position: fixed; 
   z-index: 2;
   left: 0;
@@ -198,7 +198,7 @@ html, body { height: 100% }
   min-width: 100%;
   padding-top: 0.5%;
   border: 1px solid #888;
-  height: 100%;
+  min-height: 100%;
 }
 
 #remove_fav_player{
@@ -403,6 +403,10 @@ html, body { height: 100% }
   html, body {
     height: 100%;
    }
+   .popup-content {
+    min-height: 100%;
+    height: 100%;
+  }
 
   .home {
     position: absolute;
@@ -418,9 +422,11 @@ html, body { height: 100% }
   }
   .field {
     width: 400px;
-    height: 700px;
     background-size: 100%;
     max-width: 100%;
+  }
+  .player_info{
+    min-height: auto;
   }
   #CF{
     margin: 10% auto 0 auto;

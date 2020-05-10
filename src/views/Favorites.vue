@@ -51,7 +51,7 @@
 
 @media screen and (max-width:800px) {
   html, body {
-    min-height: 100%;
+    min-height: 100vh;
    }
   .fav_playerspage{
     margin: 15% auto;

@@ -40,4 +40,7 @@ export default new Vuex.Store({
         this.commit("setData", data)});
     },
   },
+  getters:{
+    isInFav: state => fav_player => state.favs.includes(fav_player)
+  }
 })

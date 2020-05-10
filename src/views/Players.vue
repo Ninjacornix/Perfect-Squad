@@ -4,25 +4,25 @@
       <div class="column">
         <div id="name">GK</div>
         <div id="content">
-          <div class="player" v-for="player in this.GK" :key="player.id" @click="showInfo"> <label class="name"><strong>{{ player.name}} {{ player.lastName }}</strong></label> <label class="postiton">{{ player.stats.position }}</label></div>
+          <div class="player" v-for="player in this.GK" :key="player.id" @click="showInfo"><fa-icon id="heart" v-if="$store.getters.isInFav(player)" icon="heart"></fa-icon><fa-icon id="heart" v-else icon="heart-broken"></fa-icon><label class="name"><strong>{{ player.name}} {{ player.lastName }}</strong></label><label class="postiton">{{ player.stats.position }}</label></div>
         </div>
       </div>
       <div class="column">
         <div id="name">DEF</div>
         <div id="content">
-          <div class="player" v-for="player in this.DEF" :key="player.id" @click="showInfo"><label class="name"><strong>{{ player.name}} {{ player.lastName }}</strong></label> <label class="postiton">{{ player.stats.position }}</label></div>
+          <div class="player" v-for="player in this.DEF" :key="player.id" @click="showInfo"><fa-icon id="heart" v-if="$store.getters.isInFav(player)" icon="heart"></fa-icon><fa-icon id="heart" v-else icon="heart-broken"></fa-icon><label class="name"><strong>{{ player.name}} {{ player.lastName }}</strong></label> <label class="postiton">{{ player.stats.position }}</label></div>
         </div>
       </div>
       <div class="column">
         <div id="name">MID</div>
         <div id="content">
-          <div class="player" v-for="player in this.MID" :key="player.id" @click="showInfo"><label class="name"><strong>{{ player.name}} {{ player.lastName }}</strong></label> <label class="postiton">{{ player.stats.position }}</label></div>
+          <div class="player" v-for="player in this.MID" :key="player.id" @click="showInfo"><fa-icon id="heart" v-if="$store.getters.isInFav(player)" icon="heart"></fa-icon><fa-icon id="heart" v-else icon="heart-broken"></fa-icon><label class="name"><strong>{{ player.name}} {{ player.lastName }}</strong></label> <label class="postiton">{{ player.stats.position }}</label></div>
         </div>
       </div>
       <div class="column">
         <div id="name">ATT</div>
         <div id="content">
-          <div class="player" v-for="player in this.ATT" :key="player.id" @click="showInfo"><label class="name"><strong>{{ player.name}} {{ player.lastName }}</strong></label> <label class="postiton">{{ player.stats.position }}</label></div>
+          <div class="player" v-for="player in this.ATT" :key="player.id" @click="showInfo"><fa-icon id="heart" v-if="$store.getters.isInFav(player)" icon="heart"></fa-icon><fa-icon id="heart" v-else icon="heart-broken"></fa-icon><label class="name"><strong>{{ player.name}} {{ player.lastName }}</strong></label> <label class="postiton">{{ player.stats.position }}</label></div>
         </div>
       </div>
     </div>
@@ -200,6 +200,11 @@ export default {
           }
         }
       }
+  },
+  isInfav(n){
+    if(this.$store.state.favs){
+      return this.$store.state.favs.includes(n);
+    }
   }
 }
 </script>
@@ -353,6 +358,10 @@ export default {
 
 .player > .postiton {
   float: right;
+}
+
+#heart{
+  float: left;
 }
 
 @media screen and (max-width:800px){
