@@ -6,9 +6,11 @@ import store from './store'
 import axios from 'axios';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
+import { faHeart } from '@fortawesome/free-solid-svg-icons'
+import { faHeartBroken} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
  
-library.add(faUserSecret);
+library.add(faUserSecret,faHeart,faHeartBroken);
  
 Vue.component('fa-icon', FontAwesomeIcon);
 

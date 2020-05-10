@@ -45,6 +45,7 @@ export default {
   methods: {
     log(event){
       const save = event.target.innerHTML;
+      
       for(const index in this.$store.state.store.formations){
         if(save === this.$store.state.store.formations[index].formation){
           this.formation = this.$store.state.store.formations[index].positions;

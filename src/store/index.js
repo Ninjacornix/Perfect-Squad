@@ -17,15 +17,20 @@ export default new Vuex.Store({
     favoritesadd(state, player){
       if(!state.favs.includes(player)){
         state.favs.push(player);
+        alert("player is added to favorites");
+      } else {
+        alert("player is already in favorites");
       }
     },
     favoritesremove(state, player){
       if(state.favs.includes(player)){
         const index = state.favs.indexOf(player);
-        console.log(index)
+        alert("players is removed from favorites");
         if (index > -1) {
           state.favs.splice(index, 1);
         }
+      } else {
+        alert("you cannot remove what doesn't exist")
       }
     }
   },

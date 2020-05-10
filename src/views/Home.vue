@@ -30,12 +30,13 @@
           <img class="player_image" v-bind:src="player.playerPicture">
           <div class="add_favs">
             <fa-icon icon="heart-broken" @click="removefromfav(player)" id="remove_fav_player"></fa-icon>
-            <fa-icon icon="heart" @click="addtofav(player)" id="fav_player" class="fab fa-medium"></fa-icon>  
+            <fa-icon icon="heart" @click="addtofav(player)" id="fav_player"></fa-icon>  
           </div>
         </div>
       </div>
     </div>
   </div>
+  <div id="players_pictures_home"></div>
   </div>
 </template>
 
@@ -44,7 +45,9 @@ export default {
   data: function(){
     return {
       positions: ["CF","LW","AM","RW","LM","CM","RM","DM","LB","CB","RB","GK"],
-      players: []
+      players: [],
+      change: "",
+      element: []
     }
   },
   watch: {
@@ -73,33 +76,46 @@ export default {
   },
   methods: {
     pinfo(e){
-      if(!e.target.hasChildNodes()){
-      console.log(e.target.parentElement)
-      this.players = [];
+      e.stopPropagation();
+      if(e.target.className === "playerformation"){
+        if(this.players.length >= 1 ){
+          this.players = [];
+        }
       const modal = document.getElementById("myModal");
-      const span = document.getElementsByClassName("close")[0];
       const player = e.target.parentElement.id;
+      if(this.element.length >= 1 ){
+        this.element = []
+      }
+      this.element.push(e.pageX);
+      this.element.push(e.pageY);
       document.getElementById("info_row").innerHTML = player;
       for(let i = 0; i < this.$store.state.store.players.length; i++){
         for(let j = 0; j < this.$store.state.store.players[i].stats.posiblePositions.length; j++){
           if(this.$store.state.store.players[i].stats.posiblePositions[j] === player){
-          this.players.push(this.$store.state.store.players[i]);
+            this.players.push(this.$store.state.store.players[i]);
           }
         }
       }
+      e.target.remove();
       modal.style.display = "block";
-      span.onclick = function() {
-          modal.style.display = "none";
-        }
-        window.onclick = function(event) {
-          if (event.target == modal) {
-            modal.style.display = "none";
-          }
-        }
       }
     },
     addtofav(player){
+      const modal = document.getElementById("myModal");
+      const home = document.querySelector(".home")
+      this.change = player.formationPicture;
       this.$store.commit("favoritesadd", player);
+      const player_pic = document.createElement("img");
+      player_pic.src = this.change;
+      player_pic.style.position = "absolute";
+      player_pic.style.left = (this.element[0] - 35 )+'px';
+      player_pic.style.top = (this.element[1] - 50)+'px';
+      player_pic.style.width = "70px";
+      player_pic.style.height = "70px";
+      home.appendChild(player_pic);
+      if(this.$store.state.favs.includes(player)){
+        modal.style.display = "none";
+      }
     },
     removefromfav(player){
       this.$store.commit("favoritesremove", player);
@@ -183,6 +199,16 @@ html, body { height: 100% }
   padding-top: 0.5%;
   border: 1px solid #888;
   height: 100%;
+}
+
+#remove_fav_player{
+  width: 25px;
+  height: 25px;
+}
+
+#fav_player{
+  width: 25px;
+  height: 25px;
 }
 
 #selection_row{
@@ -367,6 +393,11 @@ html, body { height: 100% }
   background-color: gray;
 }
 
+#players_pictures_home{
+  width: 100%;
+  height: 100%;
+}
+
 
 @media screen and (max-width:800px) {
   html, body {
@@ -382,6 +413,7 @@ html, body { height: 100% }
     display: flex;
     top: auto;
     flex-direction: column;
+    flex: 1 1 auto;
     max-height: 0;
   }
   .field {
