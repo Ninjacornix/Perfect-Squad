@@ -36,16 +36,17 @@
               <img id="playerpic">
               <span id="dot"></span>
             </div>
-            <div class="nacionality"><label id="country"></label><img id="flag"></div>
-            <div class="club"><label id="club"></label><img id="logo"></div>
-            <div class="height">Height<label id="pheight"></label></div>
-            <div class="weight">Weight<label id="pweight"></label></div>
-            <div class="date">Birth date<label id="year"></label></div>
-            <div class="age">Age<label id="realage"></label></div>
-            <div class="ppos">Preferred positions<label id="playerpos"></label></div>
-            <div class="pospos">Positions<label id="pos"></label></div>
-            <div class="preferedfoot">Preferred Foot<label id="foot"></label></div>
-            <div class="value">Value<label id="money"></label></div>
+            <div><div><div id="rating">{{this.rate}}</div><div>/5</div></div><div class="stars"><fa-icon @click="starc" icon="star" style="order: 5"></fa-icon><fa-icon @click="starc" icon="star" style="order: 4"></fa-icon><fa-icon @click="starc" icon="star" style="order: 3"></fa-icon><fa-icon @click="starc" icon="star" style="order: 2"></fa-icon><fa-icon @click="starc" icon="star" style="order: 1"></fa-icon></div></div>
+            <div><label id="country"></label><img id="flag"></div>
+            <div><label id="club"></label><img id="logo"></div>
+            <div>Height<label id="pheight"></label></div>
+            <div>Weight<label id="pweight"></label></div>
+            <div>Birth date<label id="year"></label></div>
+            <div>Age<label id="realage"></label></div>
+            <div>Preferred positions<label id="playerpos"></label></div>
+            <div>Positions<label id="pos"></label></div>
+            <div>Preferred Foot<label id="foot"></label></div>
+            <div>Value<label id="money"></label></div>
           </div>
           <div class="popupcolumnl">
           </div>
@@ -63,11 +64,15 @@ export default {
         DEF: [],
         MID: [],
         ATT: [],
+        star: "",
+        rate: ""
       }
   },
   mounted(){
     for(let i = 0; i < this.$store.state.store.players.length; i++){
         if(this.$store.state.store.players[i].stats.position === "GK"){
+          this.$store.state.store.players[i].marks = [];
+          this.$store.state.store.players[i].result = "";
           this.GK.push(this.$store.state.store.players[i]);
         }
       }
@@ -75,6 +80,8 @@ export default {
         if(this.$store.state.store.players[i].stats.position === "CB" ||
            this.$store.state.store.players[i].stats.position === "LB" ||
            this.$store.state.store.players[i].stats.position === "RB"){
+          this.$store.state.store.players[i].marks = [];
+          this.$store.state.store.players[i].result = "";
           this.DEF.push(this.$store.state.store.players[i]);
         }
       }
@@ -84,6 +91,8 @@ export default {
            this.$store.state.store.players[i].stats.position === "LM" ||
            this.$store.state.store.players[i].stats.position === "RM" ||
            this.$store.state.store.players[i].stats.position === "AM"){
+          this.$store.state.store.players[i].marks = [];
+          this.$store.state.store.players[i].result = "";
           this.MID.push(this.$store.state.store.players[i]);
         }
       }
@@ -91,6 +100,8 @@ export default {
         if(this.$store.state.store.players[i].stats.position === "CF" ||
            this.$store.state.store.players[i].stats.position === "LW" ||
            this.$store.state.store.players[i].stats.position === "RW"){
+          this.$store.state.store.players[i].marks = [];
+          this.$store.state.store.players[i].result = "";
           this.ATT.push(this.$store.state.store.players[i]);
         }
       }
@@ -98,7 +109,7 @@ export default {
   methods: {
     showInfo(e) {
       if(e.target.tagName === "DIV"){
-        const player = e.target.firstElementChild.firstElementChild.innerHTML.split(" ")[0];
+        const player = e.target.children[1].firstElementChild.innerHTML.split(" ")[0];
         for(let i = 0; i < this.$store.state.store.players.length; i++){
           if(this.$store.state.store.players[i].name.includes(player)){
             this.info(this.$store.state.store.players[i])
@@ -111,18 +122,11 @@ export default {
             this.info(this.$store.state.store.players[i])
           }
         }
-      } else if(e.target.tagName === "LABEL"){
-        const player = e.target.previousElementSibling.firstElementChild.innerHTML.split(" ")[0];
-        for(let i = 0; i < this.$store.state.store.players.length; i++){
-          if(this.$store.state.store.players[i].name.includes(player)){
-            this.info(this.$store.state.store.players[i])
-          }
-        }
       }
     },
     info(player){
         const skills = player.playerSkills;
-
+        this.star = player;
         //left side
         const modal = document.getElementById("myModal");
         const span = document.getElementsByClassName("close")[0];
@@ -199,13 +203,29 @@ export default {
             element.innerHTML = " ";
           }
         }
-      }
+      },
+  starc(){
+    const rate = event.target.parentElement.style.order;
+    const player_name = document.getElementById("playerinfo").firstElementChild.innerHTML.split(" ");
+    let playerName;
+    let playerSurname;
+    if(player_name[1]  === "Jr"){
+      playerName = player_name.join(" ");
+      playerSurname = "";
+    } else {
+      playerName = player_name[0];
+      player_name.shift();
+      playerSurname = player_name.join(" ");
+    }
+    this.$store.commit("starCalculate", {name: playerName, surname: playerSurname, star: rate});
+    this.rate = this.star.result;
   },
   isInfav(n){
     if(this.$store.state.favs){
       return this.$store.state.favs.includes(n);
     }
-  }
+  },
+  },
 }
 </script>
 
@@ -350,7 +370,6 @@ export default {
 }
 
 .player > .name {
-  padding-left: 23px;
   position: relative;
   text-align: center;
   vertical-align: middle;
@@ -362,6 +381,10 @@ export default {
 
 #heart{
   float: left;
+}
+
+.stars{
+  display: flex;
 }
 
 @media screen and (max-width:800px){

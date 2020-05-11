@@ -109,8 +109,7 @@ export default {
       this.$store.commit("favoritesadd", player);
       const player_pic = document.createElement("img");
       player_pic.src = this.change;
-      player_pic.style.width = "60px";
-      player_pic.style.height = "60px";
+      player_pic.className = "player_images_mini"
       player_pic.style.order = this.player_order;
       pos.appendChild(player_pic);
       if(this.$store.state.favs.includes(player)){
@@ -121,7 +120,7 @@ export default {
       this.$store.commit("favoritesremove", player);
     },
     sort_pop(){
-      return this.players.sort((a,b) => a.stats.kitNumber - b.stats.kitNumber);
+      return this.players.sort((a,b) => a.result - b.result);
       
     },
     sort_value(){
@@ -261,7 +260,7 @@ html, body { height: 100% }
 }
 
 .upper{
-  margin: 0 auto 0 auto;
+  margin: 0 auto;
   width: 82%;
   height: 13%;
   display: flex;
@@ -284,7 +283,7 @@ html, body { height: 100% }
 }
 
 .middle{
-  margin: 0 auto 0 auto;
+  margin: 0 auto ;
   width: 82%;
   height: 17%;
   display: flex;
@@ -296,7 +295,7 @@ html, body { height: 100% }
 }
 
 #CM{
-  padding-top: 15px;
+  padding-top: 3vh;
   width: 50%;
   height: 100%;
   display: flex;
@@ -308,13 +307,13 @@ html, body { height: 100% }
 }
 
 #DM{
-  margin: 0 auto 0 auto;
+  margin: 0 auto;
   width: 40%;
   height: 13%;
 }
 
 .back{
-  margin: 0 auto 0 auto;
+  margin: 0 auto;
   width: 82%;
   height: 15%;
   display: flex;
@@ -398,6 +397,13 @@ html, body { height: 100% }
   height: 100%;
 }
 
+.player_images_mini{
+  width: 60px;
+  height: 60px;
+  margin: auto;
+  float: left;
+}
+
 
 @media screen and (max-width:800px) {
   html, body {
@@ -428,8 +434,40 @@ html, body { height: 100% }
   .player_info{
     min-height: auto;
   }
-  #CF{
-    margin: 10% auto 0 auto;
+  .playerformation{
+    margin: auto;
+    height: 20px;
+    width: 20px;
+  }
+}
+
+@media screen and (max-width:380px){
+  .field{
+    padding-bottom: 10%;
+  }
+  .player_images_mini{
+    width: 50px;
+    height: 50px;
+  }
+}
+
+@media screen and (max-width:360px){
+  .field{
+    padding-bottom: 16%;
+  }
+  .player_images_mini{
+    width: 50px;
+    height: 50px;
+  }
+}
+
+@media screen and (max-width:320px){
+  .field{
+    padding-bottom: 36%;
+  }
+  .player_images_mini{
+    width: 50px;
+    height: 50px;
   }
 }
 

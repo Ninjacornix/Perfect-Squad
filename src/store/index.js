@@ -32,6 +32,25 @@ export default new Vuex.Store({
       } else {
         alert("you cannot remove what doesn't exist")
       }
+    },
+    starCalculate(state, payload){
+      let neymar_koji_me_zivcira_vec_2_sata = "";
+      let other_player = "";
+      for(const player in state.store.players){
+        if(state.store.players[player].lastName === payload.surname  &&  state.store.players[player].name === payload.name){
+          state.store.players[player].marks.push(payload.star);
+          other_player = state.store.players[player];
+        } else {
+          neymar_koji_me_zivcira_vec_2_sata = state.store.players[10];
+        }
+      }
+      console.log(other_player)
+      /* let res = 0;
+      for(let i = 0; i < state.store.players[player].marks.length; i++){
+        res += state.store.players[player].marks[i];
+      } */
+      /* state.store.players[player].result = res / state.store.players[player].marks.length; */
+      neymar_koji_me_zivcira_vec_2_sata.marks.push(payload.star);
     }
   },
   actions: {
