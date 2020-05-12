@@ -191,9 +191,11 @@ html, body { height: 100% }
 }
 
 .popup-content {
+  position: absolute;
+  overflow: auto;
   background: url("../assets/background.jpg") no-repeat center center fixed;
   background-size: cover;
-  margin-top: 2.5%;
+  margin-top: 5.5vh;
   min-width: 100%;
   padding-top: 0.5%;
   border: 1px solid #888;
@@ -412,6 +414,7 @@ html, body { height: 100% }
    .popup-content {
     min-height: 100%;
     height: 100%;
+    margin-top: 6.5vh;
   }
 
   .home {
@@ -459,6 +462,12 @@ html, body { height: 100% }
     width: 50px;
     height: 50px;
   }
+  .popup-content {
+    min-height: 100%;
+    height: 100%;
+    margin-top: 7vh;
+  }
+
 }
 
 @media screen and (max-width:320px){
@@ -468,6 +477,11 @@ html, body { height: 100% }
   .player_images_mini{
     width: 50px;
     height: 50px;
+  }
+  .popup-content {
+    min-height: 100%;
+    height: 100%;
+    margin-top: 8vh;
   }
 }
 
