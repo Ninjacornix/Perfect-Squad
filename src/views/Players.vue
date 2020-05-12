@@ -36,7 +36,7 @@
               <img id="playerpic">
               <span id="dot"></span>
             </div>
-            <div><div><div id="rating">{{this.rate}}</div><div>/5</div></div><div class="stars"><fa-icon @click="starc" icon="star" style="order: 5"></fa-icon><fa-icon @click="starc" icon="star" style="order: 4"></fa-icon><fa-icon @click="starc" icon="star" style="order: 3"></fa-icon><fa-icon @click="starc" icon="star" style="order: 2"></fa-icon><fa-icon @click="starc" icon="star" style="order: 1"></fa-icon></div></div>
+            <div><div><div id="rating">{{this.player_rate}}</div><div>/5</div></div><div class="stars"><fa-icon @click="starc" icon="star" style="order: 5"></fa-icon><fa-icon @click="starc" icon="star" style="order: 4"></fa-icon><fa-icon @click="starc" icon="star" style="order: 3"></fa-icon><fa-icon @click="starc" icon="star" style="order: 2"></fa-icon><fa-icon @click="starc" icon="star" style="order: 1"></fa-icon></div></div>
             <div><label id="country"></label><img id="flag"></div>
             <div><label id="club"></label><img id="logo"></div>
             <div>Height<label id="pheight"></label></div>
@@ -65,7 +65,7 @@ export default {
         MID: [],
         ATT: [],
         star: "",
-        rate: ""
+        player_rate: ""
       }
   },
   mounted(){
@@ -125,6 +125,11 @@ export default {
       }
     },
     info(player){
+        if(player.marks.length >= 1){
+          this.player_rate = player.result;
+        } else {
+          this.player_rate = 0;
+        }
         const skills = player.playerSkills;
         this.star = player;
         //left side
@@ -217,8 +222,16 @@ export default {
       player_name.shift();
       playerSurname = player_name.join(" ");
     }
+    console.log(playerName)
     this.$store.commit("starCalculate", {name: playerName, surname: playerSurname, star: rate});
-    this.rate = this.star.result;
+    for(let pName in this.$store.state.store.players){
+      if(this.$store.state.store.players[pName].name === playerName && this.$store.state.store.players[pName].lastName === playerSurname){
+        this.player_rate = this.$store.state.store.players[pName].result;
+      } else if(playerName.includes("Neymar Jr") && this.$store.state.store.players[pName].name.includes("Neymar Jr")){
+        console.log("hi")
+        this.player_rate = this.$store.state.store.players[pName].result;
+      }
+    }
   },
   isInfav(n){
     if(this.$store.state.favs){

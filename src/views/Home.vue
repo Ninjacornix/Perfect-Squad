@@ -120,16 +120,16 @@ export default {
       this.$store.commit("favoritesremove", player);
     },
     sort_pop(){
-      return this.players.sort((a,b) => a.result - b.result);
+      return this.players.sort((a,b) => b.result - a.result);
       
     },
     sort_value(){
-      return this.players.sort((a,b) => Number(a.stats.value.replace(/\D/g,'')) - Number(b.stats.value.replace(/\D/g,'')));
+      return this.players.sort((a,b) => Number(b.stats.value.replace(/\D/g,'')) - Number(a.stats.value.replace(/\D/g,'')));
     },
     sort_age(){
       const date = new Date();
       const year = date.getFullYear();
-      return this.players.sort((a,b) => (new Date(a.stats.birthDate).getFullYear() - year) - (new Date(b.stats.birthDate).getFullYear() - year));
+      return this.players.sort((a,b) => (new Date(b.stats.birthDate).getFullYear() - year) - (new Date(a.stats.birthDate).getFullYear() - year));
     }
   },
     props: ["formation"]
