@@ -4,25 +4,25 @@
       <div class="column">
         <div id="name">GK</div>
         <div id="content">
-          <div class="player" v-for="player in this.GK" :key="player.id" @click="showInfo"><fa-icon id="heart" v-if="$store.getters.isInFav(player)" icon="heart"></fa-icon><fa-icon id="heart" v-else icon="heart-broken"></fa-icon><label class="name"><strong>{{ player.name}} {{ player.lastName }}</strong></label><label class="postiton">{{ player.stats.position }}</label></div>
+          <div class="player" v-for="player in this.GK" :key="player.id" @click="showInfo"><fa-icon id="heart" v-if="$store.getters.isInFav(player)" icon="heart" :style="{ color: '#B94040', top: '50%' }"></fa-icon><fa-icon id="heart" v-else icon="heart" :style="{ color: '#9E9C9C', top: '50%' }"></fa-icon><label class="name"><strong>{{ player.name}} {{ player.lastName }}</strong></label><label class="postiton">{{ player.stats.position }}</label></div>
         </div>
       </div>
       <div class="column">
         <div id="name">DEF</div>
         <div id="content">
-          <div class="player" v-for="player in this.DEF" :key="player.id" @click="showInfo"><fa-icon id="heart" v-if="$store.getters.isInFav(player)" icon="heart"></fa-icon><fa-icon id="heart" v-else icon="heart-broken"></fa-icon><label class="name"><strong>{{ player.name}} {{ player.lastName }}</strong></label> <label class="postiton">{{ player.stats.position }}</label></div>
+          <div class="player" v-for="player in this.DEF" :key="player.id" @click="showInfo"><fa-icon id="heart" v-if="$store.getters.isInFav(player)" icon="heart" :style="{ color: '#B94040' }"></fa-icon><fa-icon id="heart" v-else icon="heart" :style="{ color: '#9E9C9C' }"></fa-icon><label class="name"><strong>{{ player.name}} {{ player.lastName }}</strong></label> <label class="postiton">{{ player.stats.position }}</label></div>
         </div>
       </div>
       <div class="column">
         <div id="name">MID</div>
         <div id="content">
-          <div class="player" v-for="player in this.MID" :key="player.id" @click="showInfo"><fa-icon id="heart" v-if="$store.getters.isInFav(player)" icon="heart"></fa-icon><fa-icon id="heart" v-else icon="heart-broken"></fa-icon><label class="name"><strong>{{ player.name}} {{ player.lastName }}</strong></label> <label class="postiton">{{ player.stats.position }}</label></div>
+          <div class="player" v-for="player in this.MID" :key="player.id" @click="showInfo"><fa-icon id="heart" v-if="$store.getters.isInFav(player)" icon="heart" :style="{ color: '#B94040' }"></fa-icon><fa-icon id="heart" v-else icon="heart" :style="{ color: '#9E9C9C' }"></fa-icon><label class="name"><strong>{{ player.name}} {{ player.lastName }}</strong></label> <label class="postiton">{{ player.stats.position }}</label></div>
         </div>
       </div>
       <div class="column">
         <div id="name">ATT</div>
         <div id="content">
-          <div class="player" v-for="player in this.ATT" :key="player.id" @click="showInfo"><fa-icon id="heart" v-if="$store.getters.isInFav(player)" icon="heart"></fa-icon><fa-icon id="heart" v-else icon="heart-broken"></fa-icon><label class="name"><strong>{{ player.name}} {{ player.lastName }}</strong></label> <label class="postiton">{{ player.stats.position }}</label></div>
+          <div class="player" v-for="player in this.ATT" :key="player.id" @click="showInfo"><fa-icon id="heart" v-if="$store.getters.isInFav(player)" icon="heart" :style="{ color: '#B94040' }"></fa-icon><fa-icon id="heart" v-else icon="heart" :style="{ color: '#9E9C9C' }"></fa-icon><label class="name"><strong>{{ player.name}} {{ player.lastName }}</strong></label> <label class="postiton">{{ player.stats.position }}</label></div>
         </div>
       </div>
     </div>
@@ -174,23 +174,28 @@ export default {
         for(const skill in skills){
           const skillthings = document.createElement("div");
           const specials = document.createElement("div");
-          skillthings.innerHTML = "<div class='skill_main'>" + skills[skill].name + "</div>";
+          const string_for_capitalize = skills[skill].name.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ');
+          skillthings.innerHTML = "<div class='skill_main'>" + string_for_capitalize  + "</div>";
           if(skills[skill].name != "specialities"){
             for(const subskill in skills[skill].skills){
               const subskillthings = document.createElement("div");
               const progress = document.createElement("progress");
+              const subskill_name = document.createElement("div");
               progress.className = "progbar"
               progress.max = "100";
               progress.value = skills[skill].skills[subskill].value;
-              subskillthings.innerHTML = skills[skill].skills[subskill].name;
+              subskill_name.innerHTML = skills[skill].skills[subskill].name.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ');
+              subskillthings.classList.add("skill_things");
+              subskillthings.appendChild(subskill_name);
+              subskillthings.appendChild(progress);
               skillthings.appendChild(subskillthings);
-              skillthings.appendChild(progress);
             }
           } else {
             for(const speciality in skills[skill].skills){
               const special = document.createElement("div");
               special.innerHTML = skills[skill].skills[speciality].name;
               special.className = "speci";
+              special.classList.add("skill_things");
               specials.appendChild(special);
             }
           }
@@ -258,12 +263,13 @@ export default {
 }
 
 .row {
-  padding-top: 40px;
+  padding: 40px 5% 0 5%;
 }
 
 .column {
   float: left;
   width: 25%;
+  height: 15%;
 }
 
 .modal {
@@ -271,12 +277,12 @@ export default {
   width: 100%; 
   height: 100%; 
   position: fixed; 
-  z-index: 2;
+  z-index: 11;
   left: 0;
   top: 0;
   overflow: auto; 
   background-color: rgb(0,0,0); 
-  background-color: rgba(0,0,0,0.4); 
+  background-color: rgba(0,0,0,0.8); 
 }
 
 #playerpic{
@@ -285,11 +291,10 @@ export default {
 }
 
 .modal-content {
-  background-color: silver;
+  background-color: #DFDFDF;
   margin: 15% auto;
   padding: 20px;
   border: 1px solid #888;
-  border-radius: 25px;
   width: 80%;
 }
 
@@ -318,12 +323,18 @@ export default {
 
 
 .skill_main{
+  line-height: 35px;
+  vertical-align: middle;
+  height: 35px;
   margin-top: 10px;
-  border-radius: 25px;
-  text-align: center;
+  padding-left: 5%;
   background-color: rgba(255,255,255, 0.3);
 }
 
+.skill_things{
+  display: inline-flex;
+  width: 100%;
+}
 
 .progbar{
   width: 100%;
@@ -344,11 +355,12 @@ export default {
 }
 
 .popupcolumnl {
+  border-right: 2px solid #838484;
   padding: 20px;
   padding-top: 0;
   width: 50%;
   float: left;
-  border-left: 2px solid lightgray;
+  border-left: 2px solid #838484;
 }
 
 
@@ -368,16 +380,17 @@ export default {
 
 #name {
   text-align: center;
-  background-color: silver;
+  background-color: #DFDFDF;
   border-left: 1px solid black ;
   height: 5%;
+  box-shadow: 0px 2px 4.9px 0.1px rgba(0, 0, 0, 0.4);
 }
 
 .player {
   position: relative;
   text-align: center;
   padding: 2%;
-  background-color: silver;
+  background-color: #DFDFDF;
   margin: 10px 15px 5px 15px;
   z-index: 1;
 }

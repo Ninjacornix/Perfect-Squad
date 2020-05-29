@@ -347,12 +347,13 @@ html, body { height: 100% }
 }
 
 .playerformation{
-  border: 3px solid white;
   margin: auto;
   height: 25px;
   width: 25px;
-  background-color: #FD5F00;
+  background-color: #2D3B0D;
   border-radius: 50%;
+  box-shadow: 0px 2px 4.9px 0.1px rgba(0, 0, 0, 0.4);
+  border: solid 1px rgba(255, 255, 255, 0.5);
 }
 
 .player_section{

@@ -18,11 +18,14 @@
   <div class="nav-links">
     <router-link to="/players">Players</router-link>
     <router-link to="/favorites">Favorites</router-link>
-    <div class="formations">Formations
-      <div class="things">
-        <ul>
-          <li v-for="index in this.$store.state.store.formations" :key="index.id" ><a @click="log">{{index.formation}}</a></li>
-        </ul>
+    <div class="formations" @click="showdropdown()">
+      <div>Formation: </div> 
+      <div> <i id="selected_formation">none-selected</i> 
+          <div class="things">
+          <ul>
+            <li v-for="index in this.$store.state.store.formations" :key="index.id" ><a @click="log">{{index.formation}}</a></li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -48,10 +51,15 @@ export default {
       for(const index in this.$store.state.store.formations){
         if(save === this.$store.state.store.formations[index].formation){
           this.formation = this.$store.state.store.formations[index].positions;
+          document.getElementById("selected_formation").innerHTML = this.$store.state.store.formations[index].formation;
         }
       }
       this.pinfo = "function info()"
     },
+    showdropdown(){
+      document.querySelector(".things").style.display = "block";
+      document.querySelector(".things").style.maxHeight = "100%";
+    }
   }
 }
 </script>
@@ -60,6 +68,7 @@ export default {
 $navcolor: green;
 #app{
   height: 100%;
+  min-height: 100%;
 }
 
 * {
@@ -73,20 +82,35 @@ $navcolor: green;
 }
 
 .nav {
+  background-color: #203C00;
   padding-left: 3%;
   padding-right: 3%;
   height: 50px;
   width: 100%;
-  background-color: #1C7523;
   position: fixed;
-  z-index: 99;
-  font-family: Roboto;
+  z-index: 10;
+  font-family: Arial;
 }
 
+.selected_formation{
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.show {
+  max-height: 100%;
+  display: block;
+}
+
+.formations {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
 
 .formations ul {
   text-align: center;
-  position: relative;
   margin-top: 15px;
   margin-left: -9px;
   width: 111px;
@@ -99,8 +123,13 @@ $navcolor: green;
   display: block;
   padding: 10px;
   text-decoration: none;
-  background-color: #1C7523;
+  background-color: #203C00;
 }
+
+.formations a:hover{
+  color: gold;
+}
+
 .things {
   display: none;
   max-height: 0;
@@ -115,10 +144,6 @@ $navcolor: green;
   padding: 10px;
 }
 
-.formations:hover .things{
-  max-height: 100%;
-  display: block;
-}
 
 .nav > .nav-header {
   display: inline;
@@ -140,7 +165,8 @@ $navcolor: green;
 }
 
 .nav > .nav-links {
-  display: inline;
+  display: flex;
+  flex-basis: auto;
   float: right;
   font-size: 18px;
 }
@@ -153,7 +179,6 @@ $navcolor: green;
 }
 
 .nav > .nav-links > div {
-  display: inline-block;
   padding: 13px 10px 13px 10px;
   text-decoration: none;
   color: #efefef;
