@@ -4,25 +4,25 @@
       <div class="column">
         <div id="name">GK</div>
         <div id="content">
-          <div class="player" v-for="player in this.GK" :key="player.id" @click="showInfo"><fa-icon id="heart" v-if="$store.getters.isInFav(player)" icon="heart" :style="{ color: '#B94040', top: '50%' }"></fa-icon><fa-icon id="heart" v-else icon="heart" :style="{ color: '#9E9C9C', top: '50%' }"></fa-icon><label class="name"><strong>{{ player.name}} {{ player.lastName }}</strong></label><label class="postiton">{{ player.stats.position }}</label></div>
+          <div class="player_info_on_page" v-for="player in this.GK" :key="player.id" @click="showInfo"><div class="player"><fa-icon id="heart" v-if="$store.getters.isInFav(player)" icon="heart" :style="{ color: '#B94040', top: '50%' }"></fa-icon><fa-icon id="heart" v-else icon="heart" :style="{ color: '#9E9C9C', top: '50%' }"></fa-icon><label class="name"><strong>{{ player.name}} {{ player.lastName }}</strong></label><label class="postiton">{{ player.stats.position }}</label></div><img @click="player_pic_func" :src="player.playerPicture" class="player_picture_under_info"><div class="under_player_picture"><img :src="player.teamCrest"><label>{{player.stats.club.toUpperCase()}}</label></div></div>
         </div>
       </div>
       <div class="column">
         <div id="name">DEF</div>
         <div id="content">
-          <div class="player" v-for="player in this.DEF" :key="player.id" @click="showInfo"><fa-icon id="heart" v-if="$store.getters.isInFav(player)" icon="heart" :style="{ color: '#B94040' }"></fa-icon><fa-icon id="heart" v-else icon="heart" :style="{ color: '#9E9C9C' }"></fa-icon><label class="name"><strong>{{ player.name}} {{ player.lastName }}</strong></label> <label class="postiton">{{ player.stats.position }}</label></div>
+          <div class="player_info_on_page" v-for="player in this.DEF" :key="player.id" @click="showInfo"><div class="player"><fa-icon id="heart" v-if="$store.getters.isInFav(player)" icon="heart" :style="{ color: '#B94040' }"></fa-icon><fa-icon id="heart" v-else icon="heart" :style="{ color: '#9E9C9C' }"></fa-icon><label class="name"><strong>{{ player.name}} {{ player.lastName }}</strong></label> <label class="postiton">{{ player.stats.position }}</label></div><img @click="player_pic_func" :src="player.playerPicture" class="player_picture_under_info"><div class="under_player_picture"><img :src="player.teamCrest"><label>{{player.stats.club.toUpperCase()}}</label></div></div>
         </div>
       </div>
       <div class="column">
         <div id="name">MID</div>
         <div id="content">
-          <div class="player" v-for="player in this.MID" :key="player.id" @click="showInfo"><fa-icon id="heart" v-if="$store.getters.isInFav(player)" icon="heart" :style="{ color: '#B94040' }"></fa-icon><fa-icon id="heart" v-else icon="heart" :style="{ color: '#9E9C9C' }"></fa-icon><label class="name"><strong>{{ player.name}} {{ player.lastName }}</strong></label> <label class="postiton">{{ player.stats.position }}</label></div>
+          <div class="player_info_on_page" v-for="player in this.MID" :key="player.id" @click="showInfo"><div class="player"><fa-icon id="heart" v-if="$store.getters.isInFav(player)" icon="heart" :style="{ color: '#B94040' }"></fa-icon><fa-icon id="heart" v-else icon="heart" :style="{ color: '#9E9C9C' }"></fa-icon><label class="name"><strong>{{ player.name}} {{ player.lastName }}</strong></label> <label class="postiton">{{ player.stats.position }}</label></div><img :src="player.playerPicture" class="player_picture_under_info"><div class="under_player_picture"><img :src="player.teamCrest"><label>{{player.stats.club.toUpperCase()}}</label></div></div>
         </div>
       </div>
       <div class="column">
         <div id="name">ATT</div>
         <div id="content">
-          <div class="player" v-for="player in this.ATT" :key="player.id" @click="showInfo"><fa-icon id="heart" v-if="$store.getters.isInFav(player)" icon="heart" :style="{ color: '#B94040' }"></fa-icon><fa-icon id="heart" v-else icon="heart" :style="{ color: '#9E9C9C' }"></fa-icon><label class="name"><strong>{{ player.name}} {{ player.lastName }}</strong></label> <label class="postiton">{{ player.stats.position }}</label></div>
+          <div class="player_info_on_page" v-for="player in this.ATT" :key="player.id" @click="showInfo"><div class="player"><fa-icon id="heart" v-if="$store.getters.isInFav(player)" icon="heart" :style="{ color: '#B94040' }"></fa-icon><fa-icon id="heart" v-else icon="heart" :style="{ color: '#9E9C9C' }"></fa-icon><label class="name"><strong>{{ player.name}} {{ player.lastName }}</strong></label> <label class="postiton">{{ player.stats.position }}</label></div><img :src="player.playerPicture" class="player_picture_under_info"><div class="under_player_picture"><img :src="player.teamCrest"><label>{{player.stats.club.toUpperCase()}}</label></div></div>
         </div>
       </div>
     </div>
@@ -65,7 +65,8 @@ export default {
         MID: [],
         ATT: [],
         star: "",
-        player_rate: ""
+        player_rate: "",
+        player_modal: ""
       }
   },
   mounted(){
@@ -112,17 +113,24 @@ export default {
         const player = e.target.children[1].firstElementChild.innerHTML.split(" ")[0];
         for(let i = 0; i < this.$store.state.store.players.length; i++){
           if(this.$store.state.store.players[i].name.includes(player)){
-            this.info(this.$store.state.store.players[i])
+            document.querySelector(".player_picture_under_info").style.display = "flex";
+            document.querySelector(".under_player_picture").style.display = "flex";
+            this.player_modal = this.$store.state.store.players[i];
           }
         }
       } else if(e.target.tagName === "STRONG"){
         const player = e.target.innerHTML.split(" ")[0];
         for(let i = 0; i < this.$store.state.store.players.length; i++){
           if(this.$store.state.store.players[i].name.includes(player)){
-            this.info(this.$store.state.store.players[i])
+            document.querySelector(".player_picture_under_info").style.display = "flex";
+            document.querySelector(".under_player_picture").style.display = "flex";
+            this.player_modal = this.$store.state.store.players[i];
           }
         }
       }
+    },
+    player_pic_func(){
+      this.info(this.player_modal);
     },
     info(player){
         if(player.marks.length >= 1){
@@ -181,13 +189,17 @@ export default {
               const subskillthings = document.createElement("div");
               const progress = document.createElement("progress");
               const subskill_name = document.createElement("div");
+              const val_div = document.createElement("div");
               progress.className = "progbar"
               progress.max = "100";
               progress.value = skills[skill].skills[subskill].value;
               subskill_name.innerHTML = skills[skill].skills[subskill].name.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ');
+              val_div.innerHTML = skills[skill].skills[subskill].value;
               subskillthings.classList.add("skill_things");
+              subskill_name.classList.add("subskillname");
               subskillthings.appendChild(subskill_name);
               subskillthings.appendChild(progress);
+              subskillthings.appendChild(val_div);
               skillthings.appendChild(subskillthings);
             }
           } else {
@@ -211,6 +223,8 @@ export default {
           if (event.target == modal) {
             modal.style.display = "none";
             element.innerHTML = " ";
+            document.querySelector(".player_picture_under_info").style.display = "none";
+            document.querySelector(".under_player_picture").style.display = "none";
           }
         }
       },
@@ -290,6 +304,12 @@ export default {
   height: 75px;
 }
 
+.player_info_on_page{
+  display: flex;
+  flex-direction: column;
+  margin: 10px 15px 5px 15px
+}
+
 .modal-content {
   background-color: #DFDFDF;
   margin: 15% auto;
@@ -311,14 +331,32 @@ export default {
   display: inline-block;
 }
 
+.under_player_picture{
+  background-color: #DFDFDF;
+  display: flex;
+  padding: 2%;
+  align-items: center;
+  display: none;
+}
+
 .popupcolumnr div{
   display: flex;
   justify-content: space-between;
 }
 
+#content{
+  padding-top: 5%;
+}
 
 .speci{
   text-align: center;
+}
+
+.player_picture_under_info{
+  position: relative;
+  width: 100%;
+  height: 30vh;
+  display: none;
 }
 
 
@@ -332,15 +370,20 @@ export default {
 }
 
 .skill_things{
-  display: inline-flex;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  white-space:nowrap;
+  text-align: center;
+  display: flex;
   width: 100%;
 }
 
 .progbar{
   width: 100%;
-  height: 10px;
-  border-radius: 25%;
-  vertical-align: baseline;
+  height: 6px;
+  line-height: 6px;
+  border: rgba(0, 0, 0, 0.3);
+  margin-top: 6px;
 }
 
 #dot {
@@ -354,15 +397,29 @@ export default {
   line-height: 35px;
 }
 
+.subskillname{
+  flex-basis: 15vw;
+  text-align: left;
+}
+
 .popupcolumnl {
-  border-right: 2px solid #838484;
   padding: 20px;
+  overflow-y: scroll;
+  height: 367px;
   padding-top: 0;
   width: 50%;
   float: left;
   border-left: 2px solid #838484;
 }
 
+.popupcolumnl::-webkit-scrollbar {
+  width: 6px;
+  background: #CDCDCD;
+}
+
+.popupcolumnl::-webkit-scrollbar-thumb {
+  background: #5D5D5D; 
+}
 
 .close {
   color: #aaa;
@@ -387,18 +444,20 @@ export default {
 }
 
 .player {
-  position: relative;
-  text-align: center;
   padding: 2%;
+  display: flex;
+  align-items: center;
   background-color: #DFDFDF;
-  margin: 10px 15px 5px 15px;
   z-index: 1;
+  box-shadow: 0px 2px 4.9px 0.1px rgba(0, 0, 0, 0.4);
+  border: solid 1px rgba(39, 39, 39, 0.5);
 }
 
 .player > .name {
   position: relative;
   text-align: center;
   vertical-align: middle;
+  margin: auto;
 }
 
 .player > .postiton {
