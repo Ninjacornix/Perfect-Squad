@@ -2,41 +2,44 @@
   <div id="players">
     <div class="row">
       <div class="column">
-        <div id="name">GK</div>
-        <div id="content">
-          <div class="player_info_on_page" v-for="player in this.GK" :key="player.id" @click="showInfo"><div class="player"><fa-icon id="heart" v-if="$store.getters.isInFav(player)" icon="heart" :style="{ color: '#B94040', top: '50%' }"></fa-icon><fa-icon id="heart" v-else icon="heart" :style="{ color: '#9E9C9C', top: '50%' }"></fa-icon><label class="name"><strong>{{ player.name}} {{ player.lastName }}</strong></label><label class="postiton">{{ player.stats.position }}</label></div><img @click="player_pic_func" :src="player.playerPicture" class="player_picture_under_info"><div class="under_player_picture"><img :src="player.teamCrest"><label>{{player.stats.club.toUpperCase()}}</label></div></div>
+        <div class="name">GK</div>
+        <div class="content">
+          <div class="player_info_on_page" v-for="player in this.GK" :key="player.id" @click="showInfo"><div class="player"><fa-icon class="heart" v-if="$store.getters.isInFav(player)" icon="heart" :style="{ color: '#B94040'}"></fa-icon><fa-icon class="heart" v-else icon="heart" :style="{ color: '#9E9C9C'}"></fa-icon><label class="playername"><strong>{{ player.name}} {{ player.lastName }}</strong></label><label class="postiton">{{ player.stats.position }}</label></div><img @click="player_pic_func" :src="player.playerPicture" class="player_picture_under_info"><div class="under_player_picture"><img :src="player.teamCrest"><label>{{player.stats.club.toUpperCase()}}</label></div></div>
         </div>
       </div>
       <div class="column">
-        <div id="name">DEF</div>
-        <div id="content">
-          <div class="player_info_on_page" v-for="player in this.DEF" :key="player.id" @click="showInfo"><div class="player"><fa-icon id="heart" v-if="$store.getters.isInFav(player)" icon="heart" :style="{ color: '#B94040' }"></fa-icon><fa-icon id="heart" v-else icon="heart" :style="{ color: '#9E9C9C' }"></fa-icon><label class="name"><strong>{{ player.name}} {{ player.lastName }}</strong></label> <label class="postiton">{{ player.stats.position }}</label></div><img @click="player_pic_func" :src="player.playerPicture" class="player_picture_under_info"><div class="under_player_picture"><img :src="player.teamCrest"><label>{{player.stats.club.toUpperCase()}}</label></div></div>
+        <div class="name">DEF</div>
+        <div class="content">
+          <div class="player_info_on_page" v-for="player in this.DEF" :key="player.id" @click="showInfo"><div class="player"><fa-icon class="heart" v-if="$store.getters.isInFav(player)" icon="heart" :style="{ color: '#B94040' }"></fa-icon><fa-icon class="heart" v-else icon="heart" :style="{ color: '#9E9C9C' }"></fa-icon><label class="playername"><strong>{{ player.name}} {{ player.lastName }}</strong></label> <label class="postiton">{{ player.stats.position }}</label></div><img @click="player_pic_func" :src="player.playerPicture" class="player_picture_under_info"><div class="under_player_picture"><img :src="player.teamCrest"><label>{{player.stats.club.toUpperCase()}}</label></div></div>
         </div>
       </div>
       <div class="column">
-        <div id="name">MID</div>
-        <div id="content">
-          <div class="player_info_on_page" v-for="player in this.MID" :key="player.id" @click="showInfo"><div class="player"><fa-icon id="heart" v-if="$store.getters.isInFav(player)" icon="heart" :style="{ color: '#B94040' }"></fa-icon><fa-icon id="heart" v-else icon="heart" :style="{ color: '#9E9C9C' }"></fa-icon><label class="name"><strong>{{ player.name}} {{ player.lastName }}</strong></label> <label class="postiton">{{ player.stats.position }}</label></div><img :src="player.playerPicture" class="player_picture_under_info"><div class="under_player_picture"><img :src="player.teamCrest"><label>{{player.stats.club.toUpperCase()}}</label></div></div>
+        <div class="name">MID</div>
+        <div class="content">
+          <div class="player_info_on_page" v-for="player in this.MID" :key="player.id" @click="showInfo"><div class="player"><fa-icon class="heart" v-if="$store.getters.isInFav(player)" icon="heart" :style="{ color: '#B94040' }"></fa-icon><fa-icon class="heart" v-else icon="heart" :style="{ color: '#9E9C9C' }"></fa-icon><label class="playername"><strong>{{ player.name}} {{ player.lastName }}</strong></label> <label class="postiton">{{ player.stats.position }}</label></div><img @click="player_pic_func" :src="player.playerPicture" class="player_picture_under_info"><div class="under_player_picture"><img :src="player.teamCrest"><label>{{player.stats.club.toUpperCase()}}</label></div></div>
         </div>
       </div>
       <div class="column">
-        <div id="name">ATT</div>
-        <div id="content">
-          <div class="player_info_on_page" v-for="player in this.ATT" :key="player.id" @click="showInfo"><div class="player"><fa-icon id="heart" v-if="$store.getters.isInFav(player)" icon="heart" :style="{ color: '#B94040' }"></fa-icon><fa-icon id="heart" v-else icon="heart" :style="{ color: '#9E9C9C' }"></fa-icon><label class="name"><strong>{{ player.name}} {{ player.lastName }}</strong></label> <label class="postiton">{{ player.stats.position }}</label></div><img :src="player.playerPicture" class="player_picture_under_info"><div class="under_player_picture"><img :src="player.teamCrest"><label>{{player.stats.club.toUpperCase()}}</label></div></div>
+        <div class="name">ATT</div>
+        <div class="content">
+          <div class="player_info_on_page" v-for="player in this.ATT" :key="player.id" @click="showInfo"><div class="player"><fa-icon class="heart" v-if="$store.getters.isInFav(player)" icon="heart" :style="{ color: '#B94040' }"></fa-icon><fa-icon class="heart" v-else icon="heart" :style="{ color: '#9E9C9C' }"></fa-icon><label class="playername"><strong>{{ player.name}} {{ player.lastName }}</strong></label> <label class="postiton">{{ player.stats.position }}</label></div><img @click="player_pic_func" :src="player.playerPicture" class="player_picture_under_info"><div class="under_player_picture"><img :src="player.teamCrest"><label>{{player.stats.club.toUpperCase()}}</label></div></div>
         </div>
       </div>
     </div>
     <div id="myModal" class="modal">
       <div class="modal-content">
-        <span class="close">&times;</span>
+        <div class="around_close"><span class="close">&times;</span></div>
         <div class="popuprow">
           <div class="popupcolumnr">
-            <div id="playerinfo"></div>
             <div id="pinfo">
-              <img id="playerpic">
+              <div id="leftsideofplayer">
+              <div id="playerinfo"></div>
               <span id="dot"></span>
             </div>
-            <div><div><div id="rating">{{this.player_rate}}</div><div>/5</div></div><div class="stars"><fa-icon @click="starc" icon="star" style="order: 5"></fa-icon><fa-icon @click="starc" icon="star" style="order: 4"></fa-icon><fa-icon @click="starc" icon="star" style="order: 3"></fa-icon><fa-icon @click="starc" icon="star" style="order: 2"></fa-icon><fa-icon @click="starc" icon="star" style="order: 1"></fa-icon></div></div>
+            <div id="rightsideofplayer">
+              <div><div class="stars"><fa-icon @click="starc" icon="star" style="order: 5; color: #B8B8B8"></fa-icon><fa-icon @click="starc" icon="star" style="order: 4; color: #B8B8B8"></fa-icon><fa-icon @click="starc" icon="star" style="order: 3; color: #B8B8B8"></fa-icon><fa-icon @click="starc" icon="star" style="order: 2; color: #B8B8B8"></fa-icon><fa-icon @click="starc" icon="star" style="order: 1; color: #B8B8B8 "></fa-icon></div></div></div>
+            </div>
+            <img id="playerpic">
             <div><label id="country"></label><img id="flag"></div>
             <div><label id="club"></label><img id="logo"></div>
             <div>Height<label id="pheight"></label></div>
@@ -113,8 +116,15 @@ export default {
         const player = e.target.children[1].firstElementChild.innerHTML.split(" ")[0];
         for(let i = 0; i < this.$store.state.store.players.length; i++){
           if(this.$store.state.store.players[i].name.includes(player)){
-            document.querySelector(".player_picture_under_info").style.display = "flex";
-            document.querySelector(".under_player_picture").style.display = "flex";
+            if(this.$store.state.store.players[i].open === undefined || this.$store.state.store.players[i].open === 1){
+              e.target.parentElement.children[1].style.display = "flex";
+              e.target.parentElement.children[2].style.display = "flex";
+              this.$store.state.store.players[i].open = 0;
+            } else if(this.$store.state.store.players[i].open === 0){
+              e.target.parentElement.children[1].style.display = "none";
+              e.target.parentElement.children[2].style.display = "none";
+              this.$store.state.store.players[i].open = 1
+            }
             this.player_modal = this.$store.state.store.players[i];
           }
         }
@@ -122,15 +132,27 @@ export default {
         const player = e.target.innerHTML.split(" ")[0];
         for(let i = 0; i < this.$store.state.store.players.length; i++){
           if(this.$store.state.store.players[i].name.includes(player)){
-            document.querySelector(".player_picture_under_info").style.display = "flex";
-            document.querySelector(".under_player_picture").style.display = "flex";
+            if(this.$store.state.store.players[i].open === undefined || this.$store.state.store.players[i].open === 1){
+              e.target.parentElement.parentElement.parentElement.children[1].style.display = "flex";
+              e.target.parentElement.parentElement.parentElement.children[2].style.display = "flex";
+              this.$store.state.store.players[i].open = 0;
+            } else if(this.$store.state.store.players[i].open === 0){
+              e.target.parentElement.parentElement.parentElement.children[1].style.display = "none";
+              e.target.parentElement.parentElement.parentElement.children[2].style.display = "none";
+              this.$store.state.store.players[i].open = 1
+            }
             this.player_modal = this.$store.state.store.players[i];
           }
         }
       }
     },
-    player_pic_func(){
-      this.info(this.player_modal);
+    player_pic_func(e){
+      const player = e.target.parentElement.children[0].children[1].firstElementChild.innerHTML.split(" ")[0];
+      for(let i = 0; i < this.$store.state.store.players.length; i++){
+          if(this.$store.state.store.players[i].name.includes(player)){
+            this.info(this.$store.state.store.players[i])
+          }
+        }
     },
     info(player){
         if(player.marks.length >= 1){
@@ -138,8 +160,21 @@ export default {
         } else {
           this.player_rate = 0;
         }
+        let stararray = [];
+        for(let i = 0; i < 5; i++){
+          stararray.push(document.querySelector(".stars").children[i])
+        }
+        stararray.reverse();
         const skills = player.playerSkills;
         this.star = player;
+        const playerrating = player.result;
+        for(let i = 0; i < Math.round(playerrating); i++){
+          stararray[i].style.color = "gold";
+        }
+        const leftower = (stararray.slice(Math.round(playerrating)));
+        for(let i = 0; i < leftower.length; i++){
+          leftower[i].style.color = "#B8B8B8";
+        }
         //left side
         const modal = document.getElementById("myModal");
         const span = document.getElementsByClassName("close")[0];
@@ -163,7 +198,7 @@ export default {
         modal.style.display = "block";
         const pic = player.formationPicture;
         const picture = document.getElementById("playerpic");
-        nacionality.innerHTML = player.nationality;
+        nacionality.innerHTML = player.nationality.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ');
         money.innerHTML = player.stats.value; 
         flag.src = player.nationalityFlag;
         club.innerHTML = player.stats.club;
@@ -174,7 +209,7 @@ export default {
         pos.innerHTML = player.stats.posiblePositions;
         pheight.innerHTML = player.stats.height;
         pweight.innerHTML = player.stats.weight;
-        realage.innerHTML = age;
+        realage.innerHTML = age + " years old";
         foot.innerHTML = player.stats.preferredFoot;
 
         //right side
@@ -195,6 +230,7 @@ export default {
               progress.value = skills[skill].skills[subskill].value;
               subskill_name.innerHTML = skills[skill].skills[subskill].name.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ');
               val_div.innerHTML = skills[skill].skills[subskill].value;
+              val_div.style.paddingLeft = "5px";
               subskillthings.classList.add("skill_things");
               subskill_name.classList.add("subskillname");
               subskillthings.appendChild(subskill_name);
@@ -223,14 +259,17 @@ export default {
           if (event.target == modal) {
             modal.style.display = "none";
             element.innerHTML = " ";
-            document.querySelector(".player_picture_under_info").style.display = "none";
-            document.querySelector(".under_player_picture").style.display = "none";
           }
         }
       },
   starc(){
     const rate = event.target.parentElement.style.order;
     const player_name = document.getElementById("playerinfo").firstElementChild.innerHTML.split(" ");
+    let stararray = [];
+    for(let i = 0; i < 5; i++){
+      stararray.push(document.querySelector(".stars").children[i])
+    }
+    stararray.reverse();
     let playerName;
     let playerSurname;
     if(player_name[1]  === "Jr"){
@@ -241,14 +280,26 @@ export default {
       player_name.shift();
       playerSurname = player_name.join(" ");
     }
-    console.log(playerName)
     this.$store.commit("starCalculate", {name: playerName, surname: playerSurname, star: rate});
     for(let pName in this.$store.state.store.players){
       if(this.$store.state.store.players[pName].name === playerName && this.$store.state.store.players[pName].lastName === playerSurname){
         this.player_rate = this.$store.state.store.players[pName].result;
+        for(let i = 0; i < Math.round(this.player_rate); i++){
+          stararray[i].style.color = "gold";
+        }
+        const leftower = (stararray.slice(Math.round(this.player_rate)));
+        for(let i = 0; i < leftower.length; i++){
+          leftower[i].style.color = "#B8B8B8";
+        }
       } else if(playerName.includes("Neymar Jr") && this.$store.state.store.players[pName].name.includes("Neymar Jr")){
-        console.log("hi")
         this.player_rate = this.$store.state.store.players[pName].result;
+        for(let i = 0; i < Math.round(this.player_rate); i++){
+          stararray[i].style.color = "gold";
+        }
+        const leftower = (stararray.slice(Math.round(this.player_rate)));
+        for(let i = 0; i < leftower.length; i++){
+          leftower[i].style.color = "#B8B8B8";
+        }
       }
     }
   },
@@ -302,6 +353,7 @@ export default {
 #playerpic{
   width: 75px;
   height: 75px;
+  border-radius: 50%;
 }
 
 .player_info_on_page{
@@ -318,6 +370,14 @@ export default {
   width: 80%;
 }
 
+.around_close{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  float: right;
+  border: 1px solid #808080;
+}
+
 .popuprow:after {
   content: "";
   display: table;
@@ -329,6 +389,7 @@ export default {
   float: left;
   width: 50%;
   display: inline-block;
+  border-right: 2px solid #838484;
 }
 
 .under_player_picture{
@@ -342,10 +403,16 @@ export default {
 .popupcolumnr div{
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  padding: 5px 0 5px 0;
 }
 
-#content{
+.content{
   padding-top: 5%;
+}
+
+#pinfo{
+  display: flex;
 }
 
 .speci{
@@ -387,14 +454,13 @@ export default {
 }
 
 #dot {
-  display: block;
-  height: 35px;
-  width: 35px;
-  background-color: green;
+  height: 40px;
+  width: 40px;
+  background-color: #589A5F;
   border-radius: 50%;
   display: inline-block;
   text-align: center;
-  line-height: 35px;
+  line-height: 40px;
 }
 
 .subskillname{
@@ -405,11 +471,10 @@ export default {
 .popupcolumnl {
   padding: 20px;
   overflow-y: scroll;
-  height: 367px;
+  height: 452px;
   padding-top: 0;
   width: 50%;
   float: left;
-  border-left: 2px solid #838484;
 }
 
 .popupcolumnl::-webkit-scrollbar {
@@ -423,9 +488,12 @@ export default {
 
 .close {
   color: #aaa;
-  float: right;
   font-size: 28px;
   font-weight: bold;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  line-height: 40px;
 }
 
 .close:hover,
@@ -435,11 +503,16 @@ export default {
   cursor: pointer;
 }
 
-#name {
+.name {
   text-align: center;
   background-color: #DFDFDF;
   border-left: 1px solid black ;
-  height: 5%;
+  height: 5vh;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin:auto;
   box-shadow: 0px 2px 4.9px 0.1px rgba(0, 0, 0, 0.4);
 }
 
@@ -453,7 +526,7 @@ export default {
   border: solid 1px rgba(39, 39, 39, 0.5);
 }
 
-.player > .name {
+.player > .playername {
   position: relative;
   text-align: center;
   vertical-align: middle;
@@ -473,25 +546,41 @@ export default {
 }
 
 @media screen and (max-width:800px){
-  #players{
+  .players{
     min-height: 100%;
   }
   .popupcolumnr {
     width: 100%;
+    border-right: none;
   }
   .popupcolumnl {
     width: 100%;
     border-left: none;
     border-top: 2px solid lightgray;
   }
-  #players{
+  .players{
     position: absolute;
   }
   .column{
     width: 100%;
     border-bottom: 1px solid black;
   }
+  .content{
+    padding-top: 0;
+    height: auto;
+  }
+  .subskillname{
+    flex-basis: 60vw
+  }
+  .player_picture_under_info{
+    height: 35vh;
+  }
 }
 
+@media screen and (width:1024px){
+  .player_picture_under_info{
+    height: 15vh;
+  }
+}
 
 </style>

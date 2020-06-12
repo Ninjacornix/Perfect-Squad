@@ -26,17 +26,19 @@
       <div id="selection_row"><div id="pop" @click="sort_pop">Popularity</div><div id="val" @click="sort_value">Value</div><div id="age" @click="sort_age">Age</div></div>
       <div class="player_section">
         <div class="player_info" v-for="player in this.players" :key="player.id">
-          <div class="pdata"><img class="team_img" v-bind:src="player.teamCrest"><div class="player_name">{{player.name}} {{player.lastName}}</div></div>
+          <div class="pdata">
+            <div><fa-icon class="heart" v-if="$store.getters.isInFav(player)" icon="heart" :style="{ color: '#B94040', top: '50%' }" @click="favremove(player)"></fa-icon><fa-icon class="heart" v-else icon="heart" :style="{ color: '#9E9C9C', top: '50%' }" @click="addtofav(player)"></fa-icon></div>
+            <div class="player_name">{{player.name}} {{player.lastName}}</div>
+            <div>{{player.stats.position}}</div></div>
           <img class="player_image" v-bind:src="player.playerPicture">
           <div class="add_favs">
-            <fa-icon icon="heart-broken" @click="removefromfav(player)" id="remove_fav_player"></fa-icon>
-            <fa-icon icon="heart" @click="addtofav(player)" id="fav_player"></fa-icon>  
+            <img class="team_img" v-bind:src="player.teamCrest">
+            <label>{{player.stats.club.toUpperCase()}}</label>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div id="players_pictures_home"></div>
   </div>
 </template>
 
@@ -48,7 +50,11 @@ export default {
       players: [],
       change: "",
       element: [],
-      player_order: ""
+      player_order: "",
+      clickedplayer : "",
+      playerparentid : "",
+      playerobject: "",
+      onterrain: []
     }
   },
   watch: {
@@ -65,6 +71,7 @@ export default {
               const player = document.createElement("div");
               player.className = "playerformation";
               player.style.order = j + 1;
+
               elem.appendChild(player);
             }
           }
@@ -78,18 +85,49 @@ export default {
   },
   methods: {
     pinfo(e){
-      e.stopPropagation();
-      this.player_order = e.target.style.order;
+      let playerchange;
+      const modal = document.getElementById("myModal");
+      const player = e.target.parentElement.id;
+      if(e.target.className === "playerimg"){
+        playerchange = e.target.parentElement.parentElement;
+      } else if (e.target.className === "underplayerextended"){
+        playerchange = e.target.parentElement;
+      } else if (e.target.className === "modelstlye"){
+        playerchange = e.target.parentElement;
+      } else if (e.target.className === "underplayer"){
+        playerchange = e.target.parentElement;
+      }
+      if(playerchange){
+        if(this.players.length >= 1 ){
+          this.players = [];
+        }
+        this.player_order = playerchange.style.order;
+        const playerparentid = playerchange.parentElement.id;
+        for(let i = 0; i < this.$store.state.store.players.length; i++){
+          if(this.$store.state.store.players[i].name.includes(playerchange.children[1].innerHTML) || this.$store.state.store.players[i].lastName.includes(playerchange.children[1].innerHTML)){
+            this.clickedplayer = playerchange;
+            this.playerobject = this.$store.state.store.players[i];
+          }
+       }
+       for(let i = 0; i < this.$store.state.store.players.length; i++){
+        for(let j = 0; j < this.$store.state.store.players[i].stats.posiblePositions.length; j++){
+          if(this.$store.state.store.players[i].stats.posiblePositions[j] === playerparentid){
+            this.players.push(this.$store.state.store.players[i]);
+          }
+        }
+      }
+        modal.style.display = "block";
+      } else {
+        this.player_order = e.target.style.order;
+        this.playerparentid = e.target.parentElement.id;
+      }
       if(e.target.className === "playerformation"){
         if(this.players.length >= 1 ){
           this.players = [];
         }
-      const modal = document.getElementById("myModal");
-      const player = e.target.parentElement.id;
       if(this.element.length >= 1 ){
         this.element = []
       }
-      this.change = e.target.parentElement.id;
       document.getElementById("info_row").innerHTML = player;
       for(let i = 0; i < this.$store.state.store.players.length; i++){
         for(let j = 0; j < this.$store.state.store.players[i].stats.posiblePositions.length; j++){
@@ -103,30 +141,85 @@ export default {
       }
     },
     addtofav(player){
+      console.log(player)
       const modal = document.getElementById("myModal");
-      const pos = document.getElementById(this.change);
-      this.change = player.formationPicture;
-      this.$store.commit("favoritesadd", player);
+      const pos = document.getElementById(this.playerparentid);
+      const model = document.createElement("div");
+      const player_background = document.createElement("div");
+      const underplayer = document.createElement("div");
       const player_pic = document.createElement("img");
-      player_pic.src = this.change;
-      player_pic.className = "player_images_mini"
-      player_pic.style.order = this.player_order;
-      pos.appendChild(player_pic);
+      this.change = player;
+      this.$store.commit("favoritesadd", player);
+      this.onterrain.push(player);
+      player_pic.src = this.change.formationPicture;
+      model.style.order = this.player_order;
+      player_background.className = "playerbackground";
+      model.className = "modelstlye";
+      if(this.clickedplayer ){
+        const parent = this.clickedplayer.parentElement;
+        this.clickedplayer.remove();
+        if(this.change.lastName === ""){
+          underplayer.innerHTML = this.change.name;
+        } else {
+          underplayer.innerHTML = this.change.lastName;
+        }
+        if(underplayer.innerHTML.length > 7){
+          underplayer.className = "underplayerextended"
+        } else {
+          underplayer.className = "underplayer";
+        }
+        player_pic.className = "playerimg";
+        player_background.appendChild(player_pic);
+        model.appendChild(player_background);
+        model.appendChild(underplayer);
+        parent.appendChild(model);
+        this.clickedplayer = false;
+      } else {
+        if(this.change.lastName === ""){
+          underplayer.innerHTML = this.change.name;
+        } else {
+          underplayer.innerHTML = this.change.lastName;
+        }
+        if(underplayer.innerHTML.length > 7){
+          underplayer.className = "underplayerextended"
+        } else {
+          underplayer.className = "underplayer";
+        }
+        player_pic.className = "playerimg";
+        player_background.appendChild(player_pic);
+        model.appendChild(player_background);
+        model.appendChild(underplayer);
+        pos.appendChild(model);
+      }
+      if(player !== this.playerobject){
+        this.$store.commit("favoritesremove", this.playerobject);
+      }
       if(this.$store.state.favs.includes(player)){
         modal.style.display = "none";
       }
+    },
+    favremove(player){
+      this.$store.commit("favoritesremove", player);
     },
     removefromfav(player){
       this.$store.commit("favoritesremove", player);
     },
     sort_pop(){
+      document.getElementById("pop").style.color = "#858585";
+      document.getElementById("val").style.color = "#242424";
+      document.getElementById("age").style.color = "#242424";
       return this.players.sort((a,b) => b.result - a.result);
-      
     },
     sort_value(){
+      document.getElementById("pop").style.color = "#242424";
+      document.getElementById("val").style.color = "#858585";
+      document.getElementById("age").style.color = "#242424";
       return this.players.sort((a,b) => Number(b.stats.value.replace(/\D/g,'')) - Number(a.stats.value.replace(/\D/g,'')));
     },
     sort_age(){
+      document.getElementById("pop").style.color = "#242424";
+      document.getElementById("val").style.color = "#242424";
+      document.getElementById("age").style.color = "#858585";
       const date = new Date();
       const year = date.getFullYear();
       return this.players.sort((a,b) => (new Date(b.stats.birthDate).getFullYear() - year) - (new Date(a.stats.birthDate).getFullYear() - year));
@@ -180,14 +273,16 @@ html, body { height: 100% }
 
 #info_row{
   text-align: center;
-  background-color: lightgray;
+  background-color: #DFDFDF;
   width: 100%;
 }
 
 .pdata{
   display: flex;
   justify-content: space-between;
-  background-color: gray;
+  background-color: #DFDFDF;
+  align-items: center;
+  padding: 6% 5% 6% 5%;
 }
 
 .popup-content {
@@ -214,7 +309,7 @@ html, body { height: 100% }
 
 #selection_row{
   display: flex;
-  background-color: gray;
+  background-color: #CBCBCB;
 }
 
 #val{
@@ -238,20 +333,45 @@ html, body { height: 100% }
   float: left;
 }
 
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-  z-index: 2;
+.playerimg{
+  display:block;
+  width: 60px;
+  height: 60px;
+  margin: auto;
+  border-radius: 50%;
 }
 
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
+.playerbackground{
+  background-color: white;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: inline-block;
+  margin: auto;
 }
+
+.underplayer{
+  background-color: white;
+  text-align: center;
+  display: inline;
+  margin: auto;
+  width: 60px;
+}
+
+.underplayerextended{
+  background-color: white;
+  text-align: center;
+  display: inline;
+  margin: auto;
+  width: auto;
+}
+
+.modelstlye{
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
+
 
 // AREAS
 #CF{
@@ -358,7 +478,7 @@ html, body { height: 100% }
 
 .player_section{
   position: absolute;
-  top: 30%;
+  top: 25%;
   max-height: 50%;
   display: flex;
   align-self: center;
@@ -368,36 +488,30 @@ html, body { height: 100% }
   display: flex;
   flex-direction: column;
   position: relative;
-  text-align: center;
   padding: 2%;
   margin: 0 auto;
   min-height: 100%;
   width: 100%;
-  flex: 0.1 0.1 200px;
+  justify-content: space-between;
+  flex: 0.4 0.4;
 }
 
 .player_name{
   margin: auto;
   align-content: center;
-  background-color: gray;
 }
 
 .player_image{
   width: 100%;
-  height: 75%;
+  height: 100%;
 }
 
 .add_favs{
-  max-width: 100%;
-  align-content: center;
+  background-color: #DFDFDF;
   display: flex;
-  justify-content: space-between;
-  background-color: gray;
-}
-
-#players_pictures_home{
-  width: 100%;
-  height: 100%;
+  padding: 2%;
+  align-items: center;
+  height: 45px;
 }
 
 .player_images_mini{

@@ -1,10 +1,10 @@
 <template>
-  <div id="app">
+  <div id="app" @click="removedropdown">
     <div class="nav">
   <input type="checkbox" id="nav-check">
   <div class="nav-header">
     <div class="nav-title">
-      <router-link to="/"><div>Perfect squad</div></router-link>
+      <div>Perfect squad</div>
     </div>
   </div>
   <div class="nav-btn">
@@ -17,10 +17,10 @@
   
   <div class="nav-links">
     <router-link to="/players">Players</router-link>
-    <router-link to="/favorites">Favorites</router-link>
-    <div class="formations" @click="showdropdown()">
+    <router-link to="/">Favorites</router-link>
+    <div class="formations" @click="showdropdown">
       <div>Formation: </div> 
-      <div> <i id="selected_formation">none-selected</i> 
+      <div class="next_to_formations"><i id="selected_formation">none-selected</i> 
           <div class="things">
           <ul>
             <li v-for="index in this.$store.state.store.formations" :key="index.id" ><a @click="log">{{index.formation}}</a></li>
@@ -46,6 +46,17 @@ export default {
     }
   },
   methods: {
+    showdropdown(){
+      const element = document.querySelector(".things");
+      const element2 = document.querySelector(".show");
+      if(element){
+        element.classList.remove("things")
+        element.classList.add('show');
+      } else if(element2){
+        element2.classList.remove("show")
+        element2.classList.add('things');
+      }
+    },
     log(event){
       const save = event.target.innerHTML;
       for(const index in this.$store.state.store.formations){
@@ -56,9 +67,14 @@ export default {
       }
       this.pinfo = "function info()"
     },
-    showdropdown(){
-      document.querySelector(".things").style.display = "block";
-      document.querySelector(".things").style.maxHeight = "100%";
+    removedropdown(e){
+      if(!e.target.matches(".formations") && !e.target.matches(".next_to_formations") && !e.target.matches("#selected_formation")){
+        const elem = document.querySelector(".show");
+        if(elem){
+          elem.classList.remove("show");
+          elem.classList.add("things");
+        }
+      }
     }
   }
 }
@@ -92,10 +108,8 @@ $navcolor: green;
   font-family: Arial;
 }
 
-.selected_formation{
+#selected_formation{
   text-align: center;
-  display: flex;
-  flex-direction: column;
 }
 
 .show {
@@ -112,8 +126,9 @@ $navcolor: green;
 .formations ul {
   text-align: center;
   margin-top: 15px;
-  margin-left: -9px;
-  width: 111px;
+  width: 120px;
+  display: flex;
+  flex-direction: column;
   list-style-type: none;
   padding: 0;
   position: absolute;
@@ -141,15 +156,20 @@ $navcolor: green;
   float: left;
   text-align: left;
   height: 15px;
-  padding: 10px;
+  width: 100%;
 }
 
+.next_to_formations{
+  display: flex;
+  width: 120px;
+  flex-direction: column;
+}
 
 .nav > .nav-header {
   display: inline;
 }
 
-.nav > .nav-header > .nav-title > a{
+.nav > .nav-header > .nav-title > div{
   text-decoration: none;
   color: #efefef;
 }
