@@ -1,4 +1,7 @@
-# perfect_squad
+# perfect_squad  
+Project for Frontend Web Developer certificate  
+  
+## How to install
 
 ## Project setup
 ```
